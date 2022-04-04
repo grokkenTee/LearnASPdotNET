@@ -47,7 +47,7 @@
     <Compile Include="SQLServer\CategoryDAL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SV_19t1021254.DomainModel\SV19T1021254.DomainModel.csproj">
+    <ProjectReference Include="..\SV19T1021254.DomainModel\SV19T1021254.DomainModel.csproj">
       <Project>{4411abaa-0b2b-42c4-9e50-dd10d90c194c}</Project>
       <Name>SV19T1021254.DomainModel</Name>
     </ProjectReference>

@@ -186,11 +186,11 @@
       <Project>{177a2c12-e477-4868-a64a-7bada5559914}</Project>
       <Name>SV19T1021254.BussinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SV_19t1021254.DataLayer\SV19T1021254.DataLayer.csproj">
+    <ProjectReference Include="..\SV19T1021254.DataLayer\SV19T1021254.DataLayer.csproj">
       <Project>{e6af365b-2d84-4591-8f1b-7181283bee49}</Project>
       <Name>SV19T1021254.DataLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SV_19t1021254.DomainModel\SV19T1021254.DomainModel.csproj">
+    <ProjectReference Include="..\SV19T1021254.DomainModel\SV19T1021254.DomainModel.csproj">
       <Project>{4411abaa-0b2b-42c4-9e50-dd10d90c194c}</Project>
       <Name>SV19T1021254.DomainModel</Name>
     </ProjectReference>
