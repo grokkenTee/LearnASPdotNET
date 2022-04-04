@@ -9,6 +9,7 @@ namespace SV19T1021254.WEB.Controllers
     /// <summary>
     /// 
     /// </summary>
+    [Authorize]
     public class OrderController : Controller
     {
         /// <summary>
