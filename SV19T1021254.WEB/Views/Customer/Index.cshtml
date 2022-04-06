@@ -3,5 +3,77 @@
     ViewBag.Title = "Khách hàng";
 }
 
+    <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                </button>
+                <a href="~/customer/create" class="btn btn-flat btn-default" style="margin-left:5px">
+                    Bổ sung
+                </a>
+            </span>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr class="bg-primary">
+                    <th>Tên khách hàng</th>
+                    <th>Tên giao dịch</th>
+                    <th>Địa chỉ</th>
+                    <th>Quốc gia</th>
+                    <th>Thành phố</th>
+                    <th>Mã bưu chính</th>
+                    <th style="width:80px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Trần Nguyên Phong</td>
+                    <td>Tiền</td>
+                    <td>77 Nguyễn Huệ</td>
+                    <td>Việt Nam</td>
+                    <td>Huế</td>
+                    <td>5000</td>
+                    <td class="text-right">
+                        <a href="~/customer/edit/1" class="btn-xs btn-success">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="~/customer/delete/1" class="btn-xs btn-warning">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Chính</td>
+                    <td>Bạc</td>
+                    <td>Xa lắm</td>
+                    <td>Việt Nam</td>
+                    <td>Huế</td>
+                    <td>5000</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Thân</td>
+                    <td>Vàng</td>
+                    <td>Gần lắm</td>
+                    <td>Việt Nam</td>
+                    <td>Quảng Nam</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-
+    <div class="text-center">
+        <ul class="pagination">
+            <li><a href="#">1</a></li>
+            <li class="active"><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+        </ul>
+    </div>
