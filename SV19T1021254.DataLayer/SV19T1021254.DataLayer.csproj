@@ -52,6 +52,5 @@
       <Name>SV19T1021254.DomainModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
