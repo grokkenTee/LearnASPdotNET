@@ -18,7 +18,6 @@ namespace SVT19T1021254.WEB.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
-        
         public ActionResult Login()
         {
             return View();

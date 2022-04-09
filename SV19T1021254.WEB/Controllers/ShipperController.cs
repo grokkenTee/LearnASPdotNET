@@ -20,5 +20,27 @@ namespace SV19T1021254.WEB.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Create()
+        {
+            ViewBag.Title = "Bổ sung người giao hàng";
+            return View();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Edit()
+        {
+            ViewBag.Title = "Thay đổi thông tin người giao hàng";
+            return View("Create");
+        }
+        public ActionResult Delete()
+        {
+            return View();
+        }
     }
 }
