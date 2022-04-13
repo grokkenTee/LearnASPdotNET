@@ -14,7 +14,7 @@ namespace SV19T1021254.BussinessLayer
     /// </summary>
     public static class CommonDataService
     {
-        private static ICategoryDAL categoryDB;
+        private static readonly ICategoryDAL categoryDB;
         /// <summary>
         /// Ctor
         /// </summary>
@@ -36,7 +36,7 @@ namespace SV19T1021254.BussinessLayer
             }
         }
 
-        public static List<Category> Category_list()
+        public static List<Category> CategoryList()
         {
             return categoryDB.List().ToList();
         }

@@ -7,8 +7,8 @@
     <ProjectGuid>{4411ABAA-0B2B-42C4-9E50-DD10D90C194C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SV_19t1021254.DomainModel</RootNamespace>
-    <AssemblyName>SV_19t1021254.DomainModel</AssemblyName>
+    <RootNamespace>SV19T1021254.DomainModel</RootNamespace>
+    <AssemblyName>SV19T1021254.DomainModel</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

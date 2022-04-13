@@ -7,8 +7,8 @@
     <ProjectGuid>{E6AF365B-2D84-4591-8F1B-7181283BEE49}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SV_19t1021254.DataLayer</RootNamespace>
-    <AssemblyName>SV_19t1021254.DataLayer</AssemblyName>
+    <RootNamespace>SV19T1021254.DataLayer</RootNamespace>
+    <AssemblyName>SV19T1021254.DataLayer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
