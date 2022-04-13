@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace SV_19t1021254.WEB
+namespace SV19T1021254.Web
 {
     public class RouteConfig
     {

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace SV_19t1021254.WEB
+namespace SV19T1021254.Web
 {
     public class BundleConfig
     {

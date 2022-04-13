@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SV19T1021254.WEB.Controllers
+namespace SV19T1021254.Web.Controllers
 {
     /// <summary>
     /// 
