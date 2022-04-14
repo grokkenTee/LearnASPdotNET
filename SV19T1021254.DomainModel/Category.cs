@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 namespace SV19T1021254.DomainModel
 {   
     /// <summary>
-    /// Loai hang
+    /// Loại hàng
     /// </summary>
     public class Category
     {
         /// <summary>
-        /// Ma loai hang
+        /// Mã loại hàng
         /// </summary>
         public int CategoryId { get; set; }
         /// <summary>
-        /// Ten loai hang
+        /// Tên loại hàng
         /// </summary>
         public string CategoryName { get; set; }
         /// <summary>
-        /// Mo ta
+        /// Mô tả cho loại hàng
         /// </summary>
         public string Description { get; set; }
 

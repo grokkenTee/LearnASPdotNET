@@ -13,7 +13,7 @@ namespace SV19T1021254.DataLayer
     public interface ICategoryDAL
     {
         /// <summary>
-        /// lấy danh sách các loại hàng
+        /// Lấy danh sách các loại hàng
         /// </summary>
         /// <returns></returns>
         IList<Category> List();
