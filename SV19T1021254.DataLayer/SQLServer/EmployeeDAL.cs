@@ -12,13 +12,13 @@ namespace SV19T1021254.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class ShipperDAL : _BaseDAL, IShipperDAL
+    public class EmployeeDAL : _BaseDAL, IEmployeeDAL
     {
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="connectionString"></param>
-        public ShipperDAL(string connectionString) : base(connectionString)
+        public EmployeeDAL(string connectionString) : base(connectionString)
         {
         }
         /// <summary>
@@ -26,7 +26,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public int Add(Shipper data)
+        public int Add(Employee data)
         {
             throw new NotImplementedException();
         }
@@ -44,10 +44,13 @@ namespace SV19T1021254.DataLayer.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT    COUNT(*)
-                                    FROM    Shippers
+                                    FROM    Employees
                                     WHERE    (@searchValue = N'')
-                                        OR    (ShipperName LIKE @searchValue)
-                                        OR    (Phone LIKE @searchValue)";
+                                        OR    (
+                                                (LastName LIKE @searchValue)
+                                                OR (FirstName LIKE @searchValue)
+                                                OR (Email LIKE @searchValue)
+                                            )";
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@searchValue", searchValue);
                 cmd.Connection = cn;
@@ -57,31 +60,34 @@ namespace SV19T1021254.DataLayer.SQLServer
             return count;
         }
 
-        public bool Delete(int shipperID)
+        public bool Delete(int employeeID)
         {
             throw new NotImplementedException();
         }
 
-        public Shipper Get(int shipperID)
+        public Employee Get(int employeeID)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Shipper> List(int page, int pageSize, string searchValue)
+        public IList<Employee> List(int page, int pageSize, string searchValue)
         {
-            List<Shipper> data = new List<Shipper>();
+            List<Employee> data = new List<Employee>();
             if (searchValue != "")
                 searchValue = "%" + searchValue + "%";
             using (SqlConnection cn = OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT	*
-                                    FROM    
-	                                    (	SELECT	*, ROW_NUMBER() OVER(ORDER BY ShipperName) AS [RowNumber]
-		                                    FROM	Shippers
+                                    FROM
+	                                    (	SELECT	*, ROW_NUMBER() OVER(ORDER BY SupplierName) AS [RowNumber]
+		                                    FROM	Employees
 		                                    WHERE  (@searchValue = N'')
-			                                    or	(ShipperName like @searchValue)
-                                                or  (Phone like @searchValue)
+			                                    OR	(
+                                                        (LastName LIKE @searchValue)
+                                                    OR (FirstName LIKE @searchValue)
+                                                    OR (Email LIKE @searchValue)
+                                                )
 	                                    ) AS t
                                     WHERE	t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize";
                 cmd.CommandType = CommandType.Text;
@@ -93,11 +99,16 @@ namespace SV19T1021254.DataLayer.SQLServer
                 var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dbReader.Read())
                 {
-                    data.Add(new Shipper()
+                    data.Add(new Employee()
                     {
-                        ShipperID= Convert.ToInt32(dbReader["ShipperID"]),
-                        ShipperName = Convert.ToString(dbReader["ShipperName"]),
-                        Phone = Convert.ToString(dbReader["Phone"])
+                        //SupplierID = Convert.ToInt32(dbReader["SupplierID"]),
+                        //SupplierName = Convert.ToString(dbReader["SupplierName"]),
+                        //ContactName = Convert.ToString(dbReader["ContactName"]),
+                        //Address = Convert.ToString(dbReader["Address"]),
+                        //City = Convert.ToString(dbReader["City"]),
+                        //PostalCode = Convert.ToString(dbReader["PostalCode"]),
+                        //Country = Convert.ToString(dbReader["Country"]),
+                        //Phone = Convert.ToString(dbReader["Phone"])
                     });
                 }
                 dbReader.Close();
@@ -107,7 +118,7 @@ namespace SV19T1021254.DataLayer.SQLServer
             return data;
         }
 
-        public bool Update(Shipper data)
+        public bool Update(Employee data)
         {
             throw new NotImplementedException();
         }

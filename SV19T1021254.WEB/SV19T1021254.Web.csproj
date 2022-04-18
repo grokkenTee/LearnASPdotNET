@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Models\BasePaginationResult.cs" />
     <Compile Include="Models\CustomerPaginationResult.cs" />
+    <Compile Include="Models\EmployeePaginationResult.cs" />
     <Compile Include="Models\ShipperPaginationResult.cs" />
     <Compile Include="Models\SupplierPaginationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

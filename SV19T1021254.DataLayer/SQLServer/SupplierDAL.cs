@@ -50,6 +50,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                                                 (SupplierName LIKE @searchValue)
                                                 OR (ContactName LIKE @searchValue)
                                                 OR (Address LIKE @searchValue)
+                                                OR (Phone LIKE @searchValue)
                                             )";
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@searchValue", searchValue);
@@ -109,6 +110,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                                                         (SupplierName like @searchValue)
 			                                        or	(ContactName like @searchValue)
 			                                        or	(Address like @searchValue)
+			                                        or	(Phone like @searchValue)
                                                     )
 	                                    ) AS t
                                     WHERE	t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize";

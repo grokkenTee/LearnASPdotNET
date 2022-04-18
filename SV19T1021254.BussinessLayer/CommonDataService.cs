@@ -18,6 +18,7 @@ namespace SV19T1021254.BussinessLayer
         private static readonly ICustomerDAL customerDB;
         private static readonly ISupplierDAL supplierDB;
         private static readonly IShipperDAL shipperDB;
+        private static readonly IEmployeeDAL employeeDB;
         /// <summary>
         /// Ctor
         /// </summary>
