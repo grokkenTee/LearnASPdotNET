@@ -21,13 +21,25 @@ namespace SV19T1021254.Web.Controllers
         {
             int pageSize = 10;
             int rowCount = 0;
-            var model = CommonDataService.ListOfCustomers(page, pageSize, searchValue, out rowCount);
-            int pageCount = rowCount / pageSize + (rowCount % pageSize > 0 ? 1 : 0);
-            ViewBag.RowCount = rowCount;
-            ViewBag.PageCount = pageCount;
-            ViewBag.SearchValue = searchValue;
-            ViewBag.CurrentPage = page;
+            var data = CommonDataService.ListOfCustomers(page, pageSize, searchValue, out rowCount);
+            Models.CustomerPaginationResult model = new Models.CustomerPaginationResult()
+            {
+                Page = page,
+                PageSize = pageSize,
+                SearchValue = searchValue,
+                RowCount = rowCount,
+                Data = data
+            };
             return View(model);
+            //int pageSize = 10;
+            //int rowCount = 0;
+            //var model = CommonDataService.ListOfCustomers(page, pageSize, searchValue, out rowCount);
+            //int pageCount = rowCount / pageSize + (rowCount % pageSize > 0 ? 1 : 0);
+            //ViewBag.RowCount = rowCount;
+            //ViewBag.PageCount = pageCount;
+            //ViewBag.SearchValue = searchValue;
+            //ViewBag.CurrentPage = page;
+            //return View(model);
         }
         /// <summary>
         /// Giao diện bổ sung khách hàng

@@ -16,6 +16,8 @@ namespace SV19T1021254.BussinessLayer
     {
         private static readonly ICategoryDAL categoryDB;
         private static readonly ICustomerDAL customerDB;
+        private static readonly ISupplierDAL supplierDB;
+        private static readonly IShipperDAL shipperDB;
         /// <summary>
         /// Ctor
         /// </summary>
@@ -29,11 +31,13 @@ namespace SV19T1021254.BussinessLayer
                 case "SQLServer":
                     categoryDB = new DataLayer.SQLServer.CategoryDAL(connectionString);
                     customerDB = new DataLayer.SQLServer.CustomerDAL(connectionString);
+                    supplierDB = new DataLayer.SQLServer.SupplierDAL(connectionString);
+                    shipperDB = new DataLayer.SQLServer.ShipperDAL(connectionString);
                     break;
                 //tình huống nhiều loại DB -> thêm các case
                 //TODO: xoá FakeDB, bổ sung báo lỗi cho trường hợp default?
                 default:
-                    categoryDB = new DataLayer.FakeDB.CategoryDAL();
+                    //categoryDB = new DataLayer.FakeDB.CategoryDAL();
                     break;
             }
         }
@@ -53,10 +57,36 @@ namespace SV19T1021254.BussinessLayer
         /// <param name="searchValue"></param>
         /// <param name="rowCount"></param>
         /// <returns></returns>
-        public static List<Customer> ListOfCustomers(int page, int pageSize, string searchValue, out int rowCount) 
+        public static List<Customer> ListOfCustomers(int page, int pageSize, string searchValue, out int rowCount)
         {
             rowCount = customerDB.Count(searchValue);
             return customerDB.List(page, pageSize, searchValue).ToList();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Supplier> ListOfSuppliers(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            rowCount = supplierDB.Count(searchValue);
+            return supplierDB.List(page, pageSize, searchValue).ToList();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Shipper> ListOfShippers(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            rowCount = shipperDB.Count(searchValue);
+            return shipperDB.List(page, pageSize, searchValue).ToList();
         }
     }
 }

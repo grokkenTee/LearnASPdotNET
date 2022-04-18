@@ -13,12 +13,21 @@ namespace SV19T1021254.DataLayer
     public interface ISupplierDAL
     {
         /// <summary>
-        /// Lấy danh sách các nhà cung cấp
+        /// Tim kiếm, hiển thị danh sách nhà cung cấp dưới dạng phân trang
         /// </summary>
-        /// <returns></returns>
-        IList<Supplier> List();
+        /// <param name="page">Số trang cần hiển thị</param>
+        /// <param name="pageSize">Số dòng trên mỗi trang</param>
+        /// <param name="searchValue">Tên hoặc địa chỉ cần tìm (tương đối). Chuỗi rỗng nếu lấy toàn bộ</param>
+        /// <returns>Danh sách nhà cung cấp</returns>
+        IList<Supplier> List(int page, int pageSize, string searchValue);
         /// <summary>
-        /// Lấy thông tin 1 nhà cung cấp theo mã nhà cung cấp
+        /// Đếm số nhà cung cấp thoả điều kiện tìm kiếm
+        /// </summary>
+        /// <param name="searchValue">Tên hoặc địa chỉ cần tìm (tương đối). Chuỗi rỗng nếu lấy toàn bộ</param>
+        /// <returns>Sô lượng nhà cung cấp</returns>
+        int Count(string searchValue);
+        /// <summary>
+        /// Lấy thông tin của nhà cung cấp theo mã nhà cung cấp
         /// </summary>
         /// <param name="supplierID"></param>
         /// <returns></returns>

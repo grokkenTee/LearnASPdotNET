@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SV19T1021254.BussinessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,12 +14,24 @@ namespace SV19T1021254.Web.Controllers
     public class SupplierController : Controller
     {
         /// <summary>
-        /// 
+        /// Tìm kiêm, hiển thị
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(int page=1, string searchValue="")
         {
-            return View();
+            int pageSize = 10;
+            int rowCount = 0;
+            var data = CommonDataService.ListOfSuppliers(page, pageSize, searchValue, out rowCount);
+            Models.SupplierPaginationResult model = new Models.SupplierPaginationResult()
+            {
+                Page = page,
+                PageSize = pageSize,
+                SearchValue = searchValue,
+                RowCount = rowCount,
+                Data = data
+            };
+            return View(model);
         }
         /// <summary>
         /// 

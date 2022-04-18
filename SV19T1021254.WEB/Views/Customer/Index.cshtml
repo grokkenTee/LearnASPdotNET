@@ -1,11 +1,11 @@
-﻿@model IEnumerable<SV19T1021254.DomainModel.Customer>
+﻿@model SV19T1021254.Web.Models.CustomerPaginationResult
 @{
     ViewBag.Title = "Khách hàng";
 }
 
 <form action="~/customer" method="get" class="sidebar-form">
     <div class="input-group">
-        <input type="text" name="searchValue" class="form-control" placeholder="Tìm...">
+        <input type="text" name="searchValue" class="form-control" placeholder="Nhập tên hoặc địa chỉ cần tìm" autocomplete="@Model.SearchValue">
         <span class="input-group-btn">
             <button type="submit" id="search-btn" class="btn btn-flat">
                 <i class="fa fa-search"></i>
@@ -17,7 +17,7 @@
     </div>
 </form>
 <p>
-    Có tổng cộng <b>@ViewBag.RowCount</b> trong tổng số <b>@ViewBag.PageCount</b> trang.
+    Có tổng cộng <b>@Model.RowCount</b> trong tổng số <b>@Model.PageCount</b> trang.
 </p>
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Data)
             {
                 <tr>
                     <td>@item.CustomerID</td>
@@ -61,9 +61,9 @@
 <div class="text-center">
     <ul class="pagination">
         <li><a href="#"><i class="fa fa-backward"></i></a></li>
-        @for (var i = 1; i <= ViewBag.PageCount; ++i)
+        @for (var i = 1; i <= Model.PageCount; ++i)
         {
-            if (i == ViewBag.CurrentPage)
+            if (i == Model.Page)
             {
                 <li class="active">
                     <a>@i</a>
@@ -71,7 +71,7 @@
             }
             else
             {
-                <li><a href="~/customer?page=@i&searchValue=@ViewBag.SearchValue">@i</a></li>
+                <li><a href="~/customer?page=@i&searchValue=@Model.SearchValue">@i</a></li>
             }
         }
         <li><a href="#"><i class="fa fa-forward"></i></a></li>

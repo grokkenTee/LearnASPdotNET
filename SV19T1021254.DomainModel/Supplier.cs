@@ -36,6 +36,10 @@ namespace SV19T1021254.DomainModel
         /// </summary>
         public string PostalCode { get; set; }
         /// <summary>
+        /// Quốc gia
+        /// </summary>
+        public string Country { get; set; }
+        /// <summary>
         /// Điện thoại
         /// </summary>
         public string Phone { get; set; }
