@@ -245,7 +245,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Parameters.AddWithValue("@Country", data.Country);
                 cmd.Parameters.AddWithValue("@CustomerID", data.CustomerID);
 
-                result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+                result = cmd.ExecuteNonQuery() > 0;
 
                 cn.Close();
             }

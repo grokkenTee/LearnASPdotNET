@@ -45,9 +45,10 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
                 cmd.Parameters.AddWithValue("@Country", data.Country);
                 cmd.Parameters.AddWithValue("@Phone", data.Phone);
-                cn.Close();
 
                 result = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
             }
             return result;
         }
@@ -78,6 +79,8 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Connection = cn;
 
                 count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
             }
             return count;
         }
@@ -88,7 +91,21 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <returns></returns>
         public bool Delete(int supplierID)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "DELETE FROM Suppliers WHERE SupplierID = @SupplierID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
+
+                result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+
+                cn.Close();
+            }
+            return result;
         }
         /// <summary>
         /// Lấy nhà cung cấp theo mã nhà cung cấp
@@ -97,15 +114,34 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <returns></returns>
         public Supplier Get(int supplierID)
         {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Lấy danh sách nhà cung cấp
-        /// </summary>
-        /// <returns></returns>
-        public IList<Supplier> List()
-        {
-            throw new NotImplementedException();
+            Supplier result = null;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "SELECT * FROM Suppliers WHERE SupplierID=@SupplierID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
+                var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (dbReader.Read())
+                {
+                    result = new Supplier()
+                    {
+                        SupplierID = Convert.ToInt32(dbReader["SupplierID"]),
+                        SupplierName = Convert.ToString(dbReader["SupplierName"]),
+                        ContactName = Convert.ToString(dbReader["ContactName"]),
+                        Address = Convert.ToString(dbReader["Address"]),
+                        City = Convert.ToString(dbReader["City"]),
+                        PostalCode = Convert.ToString(dbReader["PostalCode"]),
+                        Country = Convert.ToString(dbReader["Country"]),
+                        Phone = Convert.ToString(dbReader["Phone"])
+                    };
+                }
+                dbReader.Close();
+                cn.Close();
+            }
+            return result;
         }
         /// <summary>
         /// 

@@ -19,6 +19,8 @@ namespace SV19T1021254.BussinessLayer
         private static readonly ISupplierDAL supplierDB;
         private static readonly IShipperDAL shipperDB;
         private static readonly IEmployeeDAL employeeDB;
+        private static readonly ICountryDAL countryDB;
+
         /// <summary>
         /// Ctor
         /// </summary>
@@ -35,6 +37,7 @@ namespace SV19T1021254.BussinessLayer
                     supplierDB = new DataLayer.SQLServer.SupplierDAL(connectionString);
                     shipperDB = new DataLayer.SQLServer.ShipperDAL(connectionString);
                     employeeDB = new DataLayer.SQLServer.EmployeeDAL(connectionString);
+                    countryDB = new DataLayer.SQLServer.CountryDAL(connectionString);
                     break;
                 //tình huống nhiều loại DB -> thêm các case
                 //TODO: xoá FakeDB, bổ sung báo lỗi cho trường hợp default?
@@ -47,9 +50,17 @@ namespace SV19T1021254.BussinessLayer
         /// Lấy danh sách mặt hàng
         /// </summary>
         /// <returns></returns>
-        public static List<Category> ListOfCategories()
+        public static List<Category> ListOfCategories(int page, int pageSize, string searchValue, out int rowCount)
         {
-            return categoryDB.List().ToList();
+            rowCount = categoryDB.Count(searchValue);
+            return categoryDB.List(page, pageSize, searchValue).ToList();
+        }
+        /// <summary>
+        /// Lấy danh sách các quốc gia
+        /// </summary>
+        /// <returns></returns>
+        public static List<Country> ListOfCountries(){
+            return countryDB.List().ToList();
         }
         /// <summary>
         /// Tìm kiếm và lấy danh sách khách hàng dưới dạng phân trang
@@ -63,6 +74,53 @@ namespace SV19T1021254.BussinessLayer
         {
             rowCount = customerDB.Count(searchValue);
             return customerDB.List(page, pageSize, searchValue).ToList();
+        }
+        /// <summary>
+        /// Thêm một khách hàng
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddCustomer(Customer data)
+        {
+            return customerDB.Add(data);
+        }
+        /// <summary>
+        /// Cập nhật thông tin khách hàng
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UpdateCustomer(Customer data)
+        {
+            return customerDB.Update(data);
+        }
+        /// <summary>
+        /// Xoá khách hàng, nếu khách đã tồn tại đơn hàng thì không cho phép xoá.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public static bool DelteCustomer(int customerID)
+        {
+            if (customerDB.InUsed(customerID))
+                return false;
+            return customerDB.Delete(customerID);
+        }
+        /// <summary>
+        /// Lấy thông tin 1 khách hàng từ CSDL
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public static Customer GetCustomer(int customerID)
+        {
+            return customerDB.Get(customerID);
+        }
+        /// <summary>
+        /// Kiểm tra xem khách hàng có đơn hàng không
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public static bool InUsedCustomer(int customerID)
+        {
+            return customerDB.InUsed(customerID);
         }
         /// <summary>
         /// 

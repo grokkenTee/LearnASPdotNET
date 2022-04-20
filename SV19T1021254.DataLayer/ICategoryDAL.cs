@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SV19T1021254.DomainModel;
 
+//TODO: làm list() chưa chuẩn, thêm count()
 namespace SV19T1021254.DataLayer
 {
     /// <summary>
@@ -13,10 +14,16 @@ namespace SV19T1021254.DataLayer
     public interface ICategoryDAL
     {
         /// <summary>
-        /// Lấy danh sách các loại hàng
+        /// Tim kiếm, hiển thị danh sách khách hàng dưới dạng phân trang
         /// </summary>
         /// <returns></returns>
-        IList<Category> List();
+        IList<Category> List(int page, int pageSize, string searchValue);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <returns></returns>
+        int Count(string categoryID);
         /// <summary>
         /// Lấy thông tin 1 loại hàng theo mã loại hàng
         /// </summary>

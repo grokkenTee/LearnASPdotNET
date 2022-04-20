@@ -32,6 +32,12 @@ namespace SV19T1021254.DataLayer.SQLServer
         {
             throw new NotImplementedException();
         }
+
+        public int Count(string categoryID)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -84,6 +90,12 @@ namespace SV19T1021254.DataLayer.SQLServer
             
             return data;
         }
+
+        public IList<Category> List(int page, int pageSize, string searchValue)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 
         /// </summary>
