@@ -28,7 +28,28 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <returns></returns>
         public int Add(Supplier data)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"INSERT INTO Suppliers(SupplierName,ContactName,Address,City,PostalCode,Country,Phone)
+                                    VALUES(@SupplierName,@ContactName,@Address,@City,@PostalCode,@Country,@Phone);
+                                    SELECT SCOPE_IDENTITY()";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@SupplierName", data.SupplierName);
+                cmd.Parameters.AddWithValue("@ContactName", data.ContactName);
+                cmd.Parameters.AddWithValue("@Address", data.Address);
+                cmd.Parameters.AddWithValue("@City", data.City);
+                cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
+                cmd.Parameters.AddWithValue("@Country", data.Country);
+                cmd.Parameters.AddWithValue("@Phone", data.Phone);
+                cn.Close();
+
+                result = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return result;
         }
         /// <summary>
         /// 

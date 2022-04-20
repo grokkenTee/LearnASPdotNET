@@ -34,6 +34,7 @@ namespace SV19T1021254.BussinessLayer
                     customerDB = new DataLayer.SQLServer.CustomerDAL(connectionString);
                     supplierDB = new DataLayer.SQLServer.SupplierDAL(connectionString);
                     shipperDB = new DataLayer.SQLServer.ShipperDAL(connectionString);
+                    employeeDB = new DataLayer.SQLServer.EmployeeDAL(connectionString);
                     break;
                 //tình huống nhiều loại DB -> thêm các case
                 //TODO: xoá FakeDB, bổ sung báo lỗi cho trường hợp default?
@@ -88,6 +89,19 @@ namespace SV19T1021254.BussinessLayer
         {
             rowCount = shipperDB.Count(searchValue);
             return shipperDB.List(page, pageSize, searchValue).ToList();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="rowCount"></param>
+        /// <returns></returns>
+        public static List<Employee> ListOfEmployees(int page, int pageSize, string searchValue, out int rowCount)
+        {
+            rowCount = employeeDB.Count(searchValue);
+            return employeeDB.List(page, pageSize, searchValue).ToList();
         }
     }
 }

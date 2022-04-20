@@ -43,9 +43,10 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Parameters.AddWithValue("@City", data.City);
                 cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
                 cmd.Parameters.AddWithValue("@Country", data.Country);
-                cn.Close();
 
                 result = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
             }
             return result;
         }
@@ -75,6 +76,8 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Connection = cn;
 
                 count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
             }
             return count;
         }
@@ -96,6 +99,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Parameters.AddWithValue("@CustomerID", customerID);
 
                 result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+
                 cn.Close();
             }
             return result;
@@ -130,7 +134,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                         Country = Convert.ToString(dbReader["Country"])
                     };
                 }
-
+                dbReader.Close();
                 cn.Close();
             }
             return result;
@@ -151,7 +155,9 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Connection = cn;
 
                 cmd.Parameters.AddWithValue("@CustomerID", customerID);
+
                 result = Convert.ToBoolean(cmd.ExecuteScalar());
+
                 cn.Close();
             }
             return result;
@@ -240,6 +246,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Parameters.AddWithValue("@CustomerID", data.CustomerID);
 
                 result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+
                 cn.Close();
             }
             return result;
