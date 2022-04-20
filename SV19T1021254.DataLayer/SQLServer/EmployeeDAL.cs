@@ -80,7 +80,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT	*
                                     FROM
-	                                    (	SELECT	*, ROW_NUMBER() OVER(ORDER BY SupplierName) AS [RowNumber]
+	                                    (	SELECT	*, ROW_NUMBER() OVER(ORDER BY EmployeeName) AS [RowNumber]
 		                                    FROM	Employees
 		                                    WHERE  (@searchValue = N'')
 			                                    OR	(
@@ -101,14 +101,13 @@ namespace SV19T1021254.DataLayer.SQLServer
                 {
                     data.Add(new Employee()
                     {
-                        //SupplierID = Convert.ToInt32(dbReader["SupplierID"]),
-                        //SupplierName = Convert.ToString(dbReader["SupplierName"]),
-                        //ContactName = Convert.ToString(dbReader["ContactName"]),
-                        //Address = Convert.ToString(dbReader["Address"]),
-                        //City = Convert.ToString(dbReader["City"]),
-                        //PostalCode = Convert.ToString(dbReader["PostalCode"]),
-                        //Country = Convert.ToString(dbReader["Country"]),
-                        //Phone = Convert.ToString(dbReader["Phone"])
+                        EmployeeID = Convert.ToInt32(dbReader["EmployeeID"]),
+                        LastName = Convert.ToString(dbReader["LastName"]),
+                        FirstName = Convert.ToString(dbReader["FirstName"]),
+                        BirthDate = Convert.ToDateTime(dbReader["BirthDate"]),
+                        Email = Convert.ToString(dbReader["Email"]),
+                        Notes = Convert.ToString(dbReader["Notes"]),
+                        Photo = Convert.ToString(dbReader["Photo"]),
                     });
                 }
                 dbReader.Close();
