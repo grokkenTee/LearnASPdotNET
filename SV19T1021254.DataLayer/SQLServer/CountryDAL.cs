@@ -14,10 +14,17 @@ namespace SV19T1021254.DataLayer.SQLServer
     /// </summary>
     public class CountryDAL : _BaseDAL, ICountryDAL
     {
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="connectionString"></param>
         public CountryDAL(string connectionString) : base(connectionString)
         {
         }
-
+        /// <summary>
+        /// Truy vấn SQL trả về dòng dữ liệu chứa danh sách các quốc gia
+        /// </summary>
+        /// <returns></returns>
         public IList<Country> List()
         {
             List<Country> data = new List<Country>();

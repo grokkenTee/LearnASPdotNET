@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SV19T1021254.DataLayer
 {
     /// <summary>
-    /// 
+    /// Định nghĩa các phép xử lí dữ liệu liên quan đến nhân viên.
     /// </summary>
     public interface IEmployeeDAL
     {

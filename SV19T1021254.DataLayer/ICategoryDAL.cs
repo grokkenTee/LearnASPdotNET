@@ -14,12 +14,15 @@ namespace SV19T1021254.DataLayer
     public interface ICategoryDAL
     {
         /// <summary>
-        /// Tim kiếm, hiển thị danh sách khách hàng dưới dạng phân trang
+        /// Tìm kiếm, hiển thị danh sách loại hàng dưới dạng phân trang.
         /// </summary>
+        /// <param name="page">Số trang</param>
+        /// <param name="pageSize">Số dòng mỗi trang</param>
+        /// <param name="searchValue">Tên loại hàng cần tìm (tương đối). Chuối rỗng nếu lấy toàn bộ.</param>
         /// <returns></returns>
         IList<Category> List(int page, int pageSize, string searchValue);
         /// <summary>
-        /// 
+        /// Đếm số loại hàng dựa theo kết quả tìm kiếm
         /// </summary>
         /// <param name="categoryID"></param>
         /// <returns></returns>

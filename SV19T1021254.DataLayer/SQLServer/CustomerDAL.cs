@@ -21,10 +21,10 @@ namespace SV19T1021254.DataLayer.SQLServer
         {
         }
         /// <summary>
-        /// Thêm 
+        /// Thêm một khách hàng vào DB
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">Khách hàng</param>
+        /// <returns>ID của khách hàng</returns>
         public int Add(Customer data)
         {
             int result = 0;
@@ -51,10 +51,10 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Truy vấn số lượng khách hàng thoả mãn chuỗi tìm kiếm. 
         /// </summary>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
+        /// <param name="searchValue">Chuỗi tìm kiếm, chuỗi rỗng nếu lấy tất cả</param>
+        /// <returns>Số khách hàng thoả yêu cầu</returns>
         public int Count(string searchValue)
         {
             int count = 0;
@@ -82,10 +82,10 @@ namespace SV19T1021254.DataLayer.SQLServer
             return count;
         }
         /// <summary>
-        /// 
+        /// Xoá một khách hàng trong DB
         /// </summary>
-        /// <param name="customerID"></param>
-        /// <returns></returns>
+        /// <param name="customerID">Mã khách hàng</param>
+        /// <returns>Đúng nếu xoá thành công, sai nếu ngược lại</returns>
         public bool Delete(int customerID)
         {
             bool result = false;
@@ -105,7 +105,7 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Lấy thông tin khách hàng theo ID
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
