@@ -98,7 +98,7 @@ namespace SV19T1021254.DataLayer.SQLServer
 
                 cmd.Parameters.AddWithValue("@CustomerID", customerID);
 
-                result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+                result = cmd.ExecuteNonQuery() > 0;
 
                 cn.Close();
             }
@@ -107,7 +107,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Lấy thông tin khách hàng theo ID
         /// </summary>
-        /// <param name="customerID"></param>
+        /// <param name="customerID">mã khách hàng</param>
         /// <returns></returns>
         public Customer Get(int customerID)
         {

@@ -52,5 +52,11 @@ namespace SV19T1021254.DataLayer
         /// <param name="categoryID"></param>
         /// <returns></returns>
         bool Delete(int categoryID);
+        /// <summary>
+        /// Kiểm tra xem thử 1 loại hàng hiện có dữ liệu nào liên quan không (mặt hàng)
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <returns></returns>
+        bool InUsed(int categoryID);
     }
 }

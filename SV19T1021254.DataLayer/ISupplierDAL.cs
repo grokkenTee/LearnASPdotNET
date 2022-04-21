@@ -51,5 +51,11 @@ namespace SV19T1021254.DataLayer
         /// <param name="supplierID"></param>
         /// <returns></returns>
         bool Delete(int supplierID);
+        /// <summary>
+        /// Kiểm tra xem thử 1 nhà cung cấp hiện có dữ liệu nào liên quan không (mặt hàng)
+        /// </summary>
+        /// <param name="supplierID"></param>
+        /// <returns></returns>
+        bool InUsed(int supplierID);
     }
 }

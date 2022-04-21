@@ -22,10 +22,10 @@ namespace SV19T1021254.DataLayer.SQLServer
         {
         }
         /// <summary>
-        /// Thêm
+        /// Thêm một nhà cung cấp vào DB
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">Nhà cung cấp</param>
+        /// <returns>ID của nhà cung cấp</returns>
         public int Add(Supplier data)
         {
             int result = 0;
@@ -53,7 +53,7 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Truy vấn số lượng nhà cung cấp thoả mãn chuỗi tìm kiếm.
         /// </summary>
         /// <param name="searchValue"></param>
         /// <returns></returns>
@@ -85,7 +85,7 @@ namespace SV19T1021254.DataLayer.SQLServer
             return count;
         }
         /// <summary>
-        /// Xoá
+        /// Xoá một nhà cung cấp trong DB
         /// </summary>
         /// <param name="supplierID"></param>
         /// <returns></returns>
@@ -101,7 +101,7 @@ namespace SV19T1021254.DataLayer.SQLServer
 
                 cmd.Parameters.AddWithValue("@SupplierID", supplierID);
 
-                result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+                result = cmd.ExecuteNonQuery() > 0;
 
                 cn.Close();
             }
@@ -110,7 +110,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Lấy nhà cung cấp theo mã nhà cung cấp
         /// </summary>
-        /// <param name="supplierID"></param>
+        /// <param name="supplierID">mã nhà cung cấp</param>
         /// <returns></returns>
         public Supplier Get(int supplierID)
         {
@@ -143,6 +143,30 @@ namespace SV19T1021254.DataLayer.SQLServer
             }
             return result;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="supplierID"></param>
+        /// <returns></returns>
+        public bool InUsed(int supplierID)
+        {
+            bool result = false;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"SELECT CASE WHEN EXISTS(SELECT * FROM Products WHERE SupplierID = @SupplierID) THEN 1 ELSE 0 END";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
+
+                result = Convert.ToBoolean(cmd.ExecuteScalar());
+
+                cn.Close();
+            }
+            return result;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -182,7 +206,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 {
                     data.Add(new Supplier()
                     {
-                        SupplierID= Convert.ToInt32(dbReader["SupplierID"]),
+                        SupplierID = Convert.ToInt32(dbReader["SupplierID"]),
                         SupplierName = Convert.ToString(dbReader["SupplierName"]),
                         ContactName = Convert.ToString(dbReader["ContactName"]),
                         Address = Convert.ToString(dbReader["Address"]),
@@ -205,7 +229,35 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <returns></returns>
         public bool Update(Supplier data)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"UPDATE Suppliers
+                                    SET SupplierName = @SupplierName,
+                                        ContactName = @ContactName,
+                                        Address = @Address,
+                                        City = @City,
+                                        PostalCode = @PostalCode,
+                                        Country = @Country,
+                                        Phone = @Phone
+                                    WHERE CustomerID = @CustomerID";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@SupplierName", data.SupplierName);
+                cmd.Parameters.AddWithValue("@ContactName", data.ContactName);
+                cmd.Parameters.AddWithValue("@Address", data.Address);
+                cmd.Parameters.AddWithValue("@City", data.City);
+                cmd.Parameters.AddWithValue("@PostalCode", data.PostalCode);
+                cmd.Parameters.AddWithValue("@Country", data.Country);
+                cmd.Parameters.AddWithValue("@Phone", data.Phone);
+
+                result = cmd.ExecuteNonQuery() > 0;
+
+                cn.Close();
+            }
+            return result;
         }
     }
 }

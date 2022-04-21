@@ -51,5 +51,11 @@ namespace SV19T1021254.DataLayer
         /// <param name="employeeID"></param>
         /// <returns></returns>
         bool Delete(int employeeID);
+        /// <summary>
+        /// Kiểm tra xem thử 1 nhân viên hiện có dữ liệu nào liên quan không (đơn hàng)
+        /// </summary>
+        /// <param name="employeeID"></param>
+        /// <returns></returns>
+        bool InUsed(int employeeID);
     }
 }
