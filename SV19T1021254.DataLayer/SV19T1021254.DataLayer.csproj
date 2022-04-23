@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeDB\CategoryDAL.cs" />
     <Compile Include="ICategoryDAL.cs" />
     <Compile Include="ICountryDAL.cs" />
     <Compile Include="ICustomerDAL.cs" />
