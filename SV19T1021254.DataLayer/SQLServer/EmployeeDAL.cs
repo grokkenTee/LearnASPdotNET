@@ -174,7 +174,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT	*
                                     FROM
-	                                    (	SELECT	*, ROW_NUMBER() OVER(ORDER BY EmployeeName) AS [RowNumber]
+	                                    (	SELECT	*, ROW_NUMBER() OVER(ORDER BY FirstName) AS [RowNumber]
 		                                    FROM	Employees
 		                                    WHERE  (@searchValue = N'')
 			                                    OR	(

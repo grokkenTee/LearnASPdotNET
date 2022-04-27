@@ -175,6 +175,9 @@ namespace SV19T1021254.DataLayer.SQLServer
                                     WHERE	(@pageSize=0) or (t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize)";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@page", page);
+                cmd.Parameters.AddWithValue("@pageSize", pageSize);
+                cmd.Parameters.AddWithValue("@searchValue", searchValue);
 
                 var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dbReader.Read())

@@ -5804,6 +5804,8 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\Customer\Create - Copy.cshtml" />
+    <Content Include="Views\Employee\Create - Copy.cshtml" />
+    <Content Include="Views\Employee\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

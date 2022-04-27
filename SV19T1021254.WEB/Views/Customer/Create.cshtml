@@ -17,7 +17,7 @@
                     <div class="col-sm-10">
                         @*@Html.EditorFor(m => m.CustomerName) để tự động sinh kiểu input*@
                         @*các thuộc tính name, id, value sẽ tự tạo. Cần thì tự thêm htmlAttribute*@
-                        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", @autofocus = "autofocus" })
+                        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", @autofocus="" })
 
                         @*@Html.ValidationMessage("CustomerName", new { @class = "text-danger" })*@
                         @Html.ValidationMessageFor(m => m.CustomerName, "", new { @style = "color:#f00" })
@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Tên giao dịch</label>
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ContactName, new { @class = "form-control", @autofocus = "autofocus" })
+                        @Html.TextBoxFor(m => m.ContactName, new { @class = "form-control"})
 
                         @Html.ValidationMessageFor(m => m.ContactName, "", new { @style = "color:#f00" })
                     </div>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2">Địa chỉ</label>
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @autofocus = "autofocus" })
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control"})
 
                         @Html.ValidationMessageFor(m => m.Address, "", new { @style = "color:#f00" })
                     </div>
