@@ -228,6 +228,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
 
+                cmd.Parameters.AddWithValue("@EmployeeID", data.EmployeeID);
                 cmd.Parameters.AddWithValue("@LastName", data.LastName);
                 cmd.Parameters.AddWithValue("@FirstName", data.FirstName);
                 cmd.Parameters.AddWithValue("@BirthDate", data.BirthDate);

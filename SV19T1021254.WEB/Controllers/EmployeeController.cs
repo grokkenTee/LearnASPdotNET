@@ -75,38 +75,55 @@ namespace SV19T1021254.Web.Controllers
         /// <param name="uploadPhoto"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Save(Employee model, string dateOfBirth)
+        public ActionResult Save(Employee model, string dateOfBirth, HttpPostedFileBase uploadPhoto)
         {
-            ////TODO: xử lí đầu vào
-            //DateTime birthday = DateTime.ParseExact(birthateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            //model.BirthDate = birthday;
-            ////TODO: xử lí ảnh
-            //if (uploadPhoto != null)
-            //{
-            //    string path = Server.MapPath("~/images/employees");
-            //    string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
-            //    string uploadFilePath = System.IO.Path.Combine(path+fileName);
-            //    uploadPhoto.SaveAs(uploadFilePath);
-            //    model.Photo = $"/images/employees/{fileName}";
-            //}
+            if (string.IsNullOrWhiteSpace(model.FirstName))
+                ModelState.AddModelError("FirstName", "Tên không được để trống");
+            if (string.IsNullOrWhiteSpace(model.LastName))
+                ModelState.AddModelError("LastName", "Họ không được để trống");
+            if (string.IsNullOrWhiteSpace(model.Email))
+                ModelState.AddModelError("Email", "Emailkhông được để trống");
+            if (string.IsNullOrWhiteSpace(model.Notes))
+                model.Notes = "";
+
+            //TODO: xử lí đầu vào
             try
             {
                 model.BirthDate = DateTime.ParseExact(dateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
             catch
             {
-                ModelState.AddModelError("BirthDate", "Ngày sinh không hợp lệ");
+                ModelState.AddModelError("BirthDate", $"Ngày sinh {dateOfBirth} không hợp lệ");
+                //model.BirthDate = CommonDataService.GetEmployee(model.EmployeeID).BirthDate;
             }
             if (!ModelState.IsValid)
             {
                 ViewBag.Title = model.EmployeeID == 0 ? "Bổ sung nhân viên" : "Cập nhật nhân viên";
                 return View("Create", model);
             }
-
-            return Json(string.Format("{0:dd/MM/yyyy}", model.BirthDate));
-
-
-
+            //TODO: xử lí ảnh
+            if (uploadPhoto != null)
+            {
+                //TODO: có những server sẽ cấm lệnh lấy path của web server
+                string path = Server.MapPath("~/images/employees");
+                //TODO: $"" tiện khi viết phép cộng chuối dài
+                string fileName = $"{DateTime.Now.Ticks}-{uploadPhoto.FileName}";
+                string filePath = System.IO.Path.Combine(path, fileName);
+                uploadPhoto.SaveAs(filePath);
+                model.Photo = fileName;
+            }
+            //TODO: cách kiểm tra dữ liệu 
+            //return Json(model);
+            if (model.EmployeeID == 0)
+            {
+                CommonDataService.AddEmployee(model);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                CommonDataService.UpdateEmployee(model);
+                return RedirectToAction("Index");
+            }
         }
         /// <summary>
         /// 
