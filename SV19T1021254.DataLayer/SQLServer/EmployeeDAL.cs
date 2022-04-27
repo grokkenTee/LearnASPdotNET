@@ -128,8 +128,8 @@ namespace SV19T1021254.DataLayer.SQLServer
                     {
                         EmployeeID = Convert.ToInt32(dbReader["EmployeeID"]),
                         FirstName = Convert.ToString(dbReader["FirstName"]),
-                        LastName = Convert.ToString(dbReader["FirstName"]),
-                        BirthDate = Convert.ToDateTime(dbReader["FirstName"]),
+                        LastName = Convert.ToString(dbReader["LastName"]),
+                        BirthDate = Convert.ToDateTime(dbReader["BirthDate"]),
                         Photo = Convert.ToString(dbReader["Photo"]),
                         Notes = Convert.ToString(dbReader["Notes"]),
                         Email = Convert.ToString(dbReader["Email"])

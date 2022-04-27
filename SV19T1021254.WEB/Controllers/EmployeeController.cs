@@ -20,6 +20,8 @@ namespace SV19T1021254.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="page"></param>
+        /// <param name="searchValue"></param>
         /// <returns></returns>
         public ActionResult Index(int page = 1, string searchValue = "")
         {
@@ -53,6 +55,7 @@ namespace SV19T1021254.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="employeeID"></param>
         /// <returns></returns>
         [Route("edit/{employeeID}")]
         public ActionResult Edit(int employeeID)
@@ -62,37 +65,53 @@ namespace SV19T1021254.Web.Controllers
                 return RedirectToAction("Index");
 
             ViewBag.Title = "Thay đổi thông tin nhân viên";
-            return View("Create");
+            return View("Create", model);
         }
         /// <summary>
-        /// Lưu thông tin nhân viên
+        /// 
         /// </summary>
+        /// <param name="model"></param>
+        /// <param name="dateOfBirth"></param>
+        /// <param name="uploadPhoto"></param>
         /// <returns></returns>
         [HttpPost]
-        //TODO: sử dụng cấu trúc model thì tự động ráp tham số vào
-        public ActionResult Save(Employee model, string birthateString, HttpPostedFileBase uploadPhoto)
+        public ActionResult Save(Employee model, string dateOfBirth)
         {
-            //TODO: xử lí đầu vào
-            DateTime birthday = DateTime.ParseExact(birthateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            model.BirthDate = birthday;
-            //TODO: xử lí ảnh
-            if (uploadPhoto != null)
+            ////TODO: xử lí đầu vào
+            //DateTime birthday = DateTime.ParseExact(birthateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            //model.BirthDate = birthday;
+            ////TODO: xử lí ảnh
+            //if (uploadPhoto != null)
+            //{
+            //    string path = Server.MapPath("~/images/employees");
+            //    string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
+            //    string uploadFilePath = System.IO.Path.Combine(path+fileName);
+            //    uploadPhoto.SaveAs(uploadFilePath);
+            //    model.Photo = $"/images/employees/{fileName}";
+            //}
+            try
             {
-                string path = Server.MapPath("~/images/employees");
-                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
-                string uploadFilePath = System.IO.Path.Combine(path+fileName);
-                uploadPhoto.SaveAs(uploadFilePath);
-                model.Photo = $"/images/employees/{fileName}";
+                model.BirthDate = DateTime.ParseExact(dateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                ModelState.AddModelError("BirthDate", "Ngày sinh không hợp lệ");
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = model.EmployeeID == 0 ? "Bổ sung nhân viên" : "Cập nhật nhân viên";
+                return View("Create", model);
             }
 
-            return Json(model);
+            return Json(string.Format("{0:dd/MM/yyyy}", model.BirthDate));
 
-            
+
 
         }
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="employeeID"></param>
         /// <returns></returns>
         public ActionResult Delete(int employeeID)
         {

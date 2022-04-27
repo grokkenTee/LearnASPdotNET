@@ -61,7 +61,7 @@ namespace SV19T1021254.Web.Controllers
                 return RedirectToAction("Index");
 
             ViewBag.Title = "Thay đổi thông tin loại hàng";
-            return View("Create");
+            return View("Create",model);
         }
         /// <summary>
         /// 
