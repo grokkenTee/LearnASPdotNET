@@ -12,7 +12,7 @@ namespace SV19T1021254.DataLayer.SQLServer
     /// <summary>
     /// SQL Server implement for ISupplierDAL
     /// </summary>
-    public class SupplierDAL : _BaseDAL, ISupplierDAL
+    public class SupplierDAL : _BaseDAL, ICommonDAL<Supplier>
     {
         /// <summary>
         /// Ctor
@@ -57,7 +57,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// </summary>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        public int Count(string searchValue)
+        public int Count(string searchValue="")
         {
             int count = 0;
             if (searchValue != "")
@@ -174,7 +174,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <param name="pageSize"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        public IList<Supplier> List(int page, int pageSize, string searchValue)
+        public IList<Supplier> List(int page=1, int pageSize=0, string searchValue="")
         {
             List<Supplier> data = new List<Supplier>();
             if (searchValue != "")
@@ -194,7 +194,7 @@ namespace SV19T1021254.DataLayer.SQLServer
 			                                        or	(Phone like @searchValue)
                                                     )
 	                                    ) AS t
-                                    WHERE	t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize";
+                                    WHERE	(@pageSize=0) or (t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize)";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@page", page);

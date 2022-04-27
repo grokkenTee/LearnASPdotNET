@@ -1,4 +1,4 @@
-﻿
+﻿@model SV19T1021254.DomainModel.Shipper
 @{
 
 }
@@ -8,21 +8,28 @@
         <div class="box-header with-border">
             <h3 class="box-title">&nbsp;</h3>
         </div>
-        <form class="form-horizontal" action="#">
+
+        <form class="form-horizontal" action="~/shipper/save">
             <div class="box-body">
+                @Html.HiddenFor(m=>m.ShipperID)
+
                 <div class="form-group">
                     <label class="control-label col-sm-2">Tên Người giao hàng</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="shipperName" placeholder="Nhập tên người giao hàng" name="ShipperName" autofocus>
+                        @Html.TextBoxFor(m=>m.ShipperName, new {@class="form-control", @autofocus="autofocus"})
+                        @Html.ValidationMessageFor(m=>m.ShipperName, "", new {@class="color:#f00"})
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="control-label col-sm-2">Số điện thoại</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại" name="Phone">
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "color:#f00" })
                     </div>
                 </div>
             </div>
+
             <div class="box-footer">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">

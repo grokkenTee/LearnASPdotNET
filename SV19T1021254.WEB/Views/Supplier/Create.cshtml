@@ -1,4 +1,4 @@
-﻿
+﻿@model SV19T1021254.DomainModel.Supplier
 @{
     
 }
@@ -8,56 +8,73 @@
         <div class="box-header with-border">
             <h3 class="box-title">&nbsp;</h3>
         </div>
-        <form class="form-horizontal" action="#">
+
+        <form class="form-horizontal" action="~/supplier/save">
             <div class="box-body">
+                @Html.HiddenFor(m => m.SupplierID)
+
                 <div class="form-group">
                     <label class="control-label col-sm-2">Tên nhà cung cấp</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="supplierName" placeholder="Nhập tên nhà cung cấp" name="SupplierName" autofocus>
+                        @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control", @autofocus = "autofocus" })
+
+                        @Html.ValidationMessageFor(m => m.SupplierName, "", new { @style = "color:#f00" })
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="control-label col-sm-2">Tên giao dịch</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="contactName" placeholder="Nhập tên giao dịch" name="ContactName">
+                        @Html.TextBoxFor(m => m.ContactName, new { @class = "form-control"})
+
+                        @Html.ValidationMessageFor(m => m.ContactName, "", new { @style = "color:#f00" })
                     </div>
                 </div>
+                
                 <div class="form-group">
                     <label class="control-label col-sm-2">Số điện thoại</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại" name="Phone">
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(m => m.Phone, "", new { @style = "color:#f00" })
                     </div>
                 </div>
+                
                 <div class="form-group">
                     <label class="control-label col-sm-2">Địa chỉ</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ" name="Address">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(m => m.Address, "", new { @style = "color:#f00" })
                     </div>
                 </div>
+                
                 <div class="form-group">
                     <label class="control-label col-sm-2">Quốc gia</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="country" name="Country">
-                            <option>Nga</option>
-                            <option>Việt Nam</option>
-                            <option>Úc</option>
-                            <option selected>Chọn 1 quốc gia</option>
-                        </select>
+                        @Html.DropDownListFor(m => m.Country, SelectListHelper.Countries(), new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(m => m.Country, "", new { @style = "color:#f00" })
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="control-label col-sm-2">Thành phố</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="city" placeholder="Nhập thành phố" name="City">
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="control-label col-sm-2">Mã bưu chính</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="postalCode" placeholder="Nhập địa chỉ" name="PostalCode">
+                        @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+
                     </div>
                 </div>
             </div>
+
             <div class="box-footer">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">

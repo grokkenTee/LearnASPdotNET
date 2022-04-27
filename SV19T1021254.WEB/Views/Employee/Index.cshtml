@@ -1,14 +1,13 @@
-﻿
+﻿@model SV19T1021254.Web.Models.EmployeePaginationResult
 @{
     ViewBag.Title = "Nhân viên";
 }
 
-
-<form action="#" method="get" class="sidebar-form">
+<form action="~/employee" method="get" class="sidebar-form">
     <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Tìm...">
+        <input type="text" name="searchValue" class="form-control" placeholder="Tìm theo tên hoặc email">
         <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+            <button type="submit" id="search-btn" class="btn btn-flat">
                 <i class="fa fa-search"></i>
             </button>
             <a href="~/employee/create" class="btn btn-flat btn-default" style="margin-left:5px">
@@ -17,6 +16,9 @@
         </span>
     </div>
 </form>
+<p>
+    Có tổng cộng <b>@Model.RowCount</b> trong tổng số <b>@Model.PageCount</b> trang.
+</p>
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
@@ -31,66 +33,26 @@
             </tr>
         </thead>
         <tbody>
+            @foreach(var item in Model.Data)
+            {
             <tr>
-                <td>1</td>
-                <td>Nancy Davolio</td>
-                <td>nancy.davolio@liteshop.com</td>
-                <td>1968-12-08</td>
-                <td>
-                    <img src="http://dummyimage.com/140x180.png/cc0000/ffffff&text=Employee Photo" width="80px"/>
-                </td>
-                <td>
-                    Education includes a BA in psychology from Colorado State University. She also completed (The Art of the Cold Call). Nancy is a member of 'Toastmasters International'.
-                </td>
+                <td>@item.EmployeeID</td>
+                <td>@item.FirstName @item.LastName</td>
+                <td>@item.Email</td>
+                <td>@item.BirthDate</td>
+                <td><img src="@item.Photo" width="80px"/></td>
+                <td>@item.Notes</td>
+                
                 <td class="text-center">
-                    <a href="~/employee/edit/1" class="btn-xs btn-success" style="margin:1px">
+                    <a href="~/employee/edit/@item.EmployeeID" class="btn-xs btn-success" style="margin:1px">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <a href="~/employee/delete/1" class="btn-xs btn-warning" style="margin:1px">
+                    <a href="~/employee/delete/@item.EmployeeID" class="btn-xs btn-warning" style="margin:1px">
                         <i class="fa fa-remove"></i>
                     </a>
                 </td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>Andrew Fuller</td>
-                <td>andrew.fuller@liteshop.com</td>
-                <td>1952-02-19</td>
-                <td>
-                    <img src="http://dummyimage.com/140x180.png/5fa2dd/ffffff&text=Employee Photo" width="80px" />
-                </td>
-                <td>
-Andrew received his BTS commercial and a Ph.D. in international marketing from the University of Dallas. He is fluent in French and Italian and reads German. He joined the company as a sales representative, was promoted to sales manager and was then named vice president of sales. Andrew is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association.
-                </td>
-                <td class="text-center">
-                    <a href="#" class="btn-xs btn-success" style="margin:1px">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" class="btn-xs btn-warning" style="margin:1px">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Janet Leverling</td>
-                <td>janet.leverling@liteshop.com</td>
-                <td>1963-08-30</td>
-                <td>
-                    <img src="http://dummyimage.com/140x180.png/5fa2dd/ffffff&text=Employee Photo" width="80px" />
-                </td>
-                <td>
-                    Janet has a BS degree in chemistry from Boston College). She has also completed a certificate program in food retailing management. Janet was hired as a sales associate and was promoted to sales representative.
-                </td>
-                <td class="text-center">
-                    <a href="#" class="btn-xs btn-success" style="margin:1px">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" class="btn-xs btn-warning" style="margin:1px">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                </td>
-            </tr>
+            }
         </tbody>
     </table>
 </div>
@@ -98,10 +60,19 @@ Andrew received his BTS commercial and a Ph.D. in international marketing from t
 <div class="text-center">
     <ul class="pagination">
         <li><a href="#"><i class="fa fa-backward"></i></a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
+        @for (var i = 1; i <= Model.PageCount; ++i)
+        {
+            if (i == Model.Page)
+            {
+                <li class="active">
+                    <a>@i</a>
+                </li>
+            }
+            else
+            {
+                <li><a href="~/customer?page=@i&searchValue=@Model.SearchValue">@i</a></li>
+            }
+        }
         <li><a href="#"><i class="fa fa-forward"></i></a></li>
     </ul>
 </div>

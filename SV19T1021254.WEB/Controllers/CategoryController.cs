@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SV19T1021254.BussinessLayer;
+using SV19T1021254.DomainModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,15 +12,27 @@ namespace SV19T1021254.Web.Controllers
     /// 
     /// </summary>
     [Authorize]
+    [RoutePrefix("category")]
     public class CategoryController : Controller
     {
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, string searchValue = "")
         {
-            return View();
+            int pageSize = 10;
+            int rowCount = 0;
+            var data = CommonDataService.ListOfCategories(page, pageSize, searchValue, out rowCount);
+            Models.CategoryPaginationResult model = new Models.CategoryPaginationResult()
+            {
+                Page = page,
+                PageSize = pageSize,
+                SearchValue = searchValue,
+                RowCount = rowCount,
+                Data = data
+            };
+            return View(model);
         }
         /// <summary>
         /// 
@@ -26,25 +40,48 @@ namespace SV19T1021254.Web.Controllers
         /// <returns></returns>
         public ActionResult Create()
         {
+            Category model = new Category()
+            {
+                CategoryId = 0
+            };
+
             ViewBag.Title = "Bổ sung loại hàng";
-            return View();
+            return View(model);
         }
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="categoryID"></param>
         /// <returns></returns>
-        public ActionResult Edit()
+        [Route("edit/{categoryID}")]
+        public ActionResult Edit(int categoryID)
         {
+            Category model = CommonDataService.GetCategory(categoryID);
+            if (model == null)
+                return RedirectToAction("Index");
+
             ViewBag.Title = "Thay đổi thông tin loại hàng";
             return View("Create");
         }
         /// <summary>
-        /// Xác nhận xoá 
+        /// 
         /// </summary>
+        /// <param name="categoryID"></param>
         /// <returns></returns>
-        public ActionResult Delete()
+        [Route("delete/{categoryID}")]
+        public ActionResult Delete(int categoryID)
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+            {
+                CommonDataService.DeleteCategory(categoryID);
+                return RedirectToAction("Index");
+            }
+            var model = CommonDataService.GetCategory(categoryID);
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SV19T1021254.DataLayer.SQLServer
     /// <summary>
     /// SQL Server implementation for ICategoryDAL
     /// </summary>
-    public class CategoryDAL : _BaseDAL, ICategoryDAL
+    public class CategoryDAL : _BaseDAL, ICommonDAL<Category>
     {
         /// <summary>
         /// Ctor
@@ -52,7 +52,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// </summary>
         /// <param name="searchValue">Chuỗi tìm kiếm, chuỗi rỗng nếu lấy tất cả</param>
         /// <returns>Số loại hàng thoả yêu cầu</returns>
-        public int Count(string searchValue)
+        public int Count(string searchValue = "")
         {
             int count = 0;
             if (searchValue != "")
@@ -154,40 +154,8 @@ namespace SV19T1021254.DataLayer.SQLServer
             }
             return result;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IList<Category> List()
-        {
-            List<Category> data = new List<Category>();
 
-            using (SqlConnection cn = OpenConnection())
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "SELECT * FROM Categories";
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = cn;
-
-                var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                while (dbReader.Read())
-                {
-                    data.Add(new Category()
-                    {
-                        CategoryId = Convert.ToInt32(dbReader["CategoryID"]),
-                        CategoryName = Convert.ToString(dbReader["CategoryName"]),
-                        Description = Convert.ToString(dbReader["Description"])
-                    });
-
-                }
-                dbReader.Close();
-                cn.Close();
-            }
-
-            return data;
-        }
-
-        public IList<Category> List(int page, int pageSize, string searchValue)
+        public IList<Category> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Category> data = new List<Category>();
 
@@ -204,7 +172,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                                                     OR  (Description LIKE @searchValue)
                                                    )
 	                                    ) AS t
-                                    WHERE	t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize";
+                                    WHERE	(@pageSize=0) or (t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize)";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
 
@@ -253,5 +221,6 @@ namespace SV19T1021254.DataLayer.SQLServer
             }
             return result;
         }
+
     }
 }

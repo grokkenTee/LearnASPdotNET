@@ -80,7 +80,27 @@ namespace SV19T1021254.Web.Controllers
         //TODO: sử dụng cấu trúc model thì tự động ráp tham số vào
         public ActionResult Save(Customer model)
         {
-            //TODO: Kiểm tra dữ liệu đầu vào
+            //kiểm tra dữ liệu đầu vào k dc null
+            if (string.IsNullOrWhiteSpace(model.CustomerName))
+                ModelState.AddModelError("CustomerName", "Tên khách hàng không được để trống");
+            if (string.IsNullOrWhiteSpace(model.ContactName))
+                ModelState.AddModelError("ContactName", "Tên giao dịch không được để trống");
+            if (string.IsNullOrWhiteSpace(model.Address))
+                ModelState.AddModelError("Address", "Địa chỉ không được để trống");
+            if (string.IsNullOrWhiteSpace(model.Country))
+                ModelState.AddModelError("Country", "Phải chọn quốc gia");
+            if (string.IsNullOrWhiteSpace(model.City))
+                model.City = "";
+            if (string.IsNullOrWhiteSpace(model.PostalCode))
+                model.PostalCode = "";
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = model.CustomerID == 0 ? "Bổ sung khách hàng" : "Thay đổi thông tin";
+                return View("Create", model);
+            }
+
+            //lưu dữ liệu
             if (model.CustomerID == 0)
             {
                 CommonDataService.AddCustomer(model);
@@ -92,6 +112,7 @@ namespace SV19T1021254.Web.Controllers
                 return RedirectToAction("Index");
             }
         }
+
         /// <summary>
         /// Xác nhận xoá 
         /// </summary>

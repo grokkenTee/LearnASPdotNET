@@ -12,7 +12,7 @@ namespace SV19T1021254.DataLayer.SQLServer
     /// <summary>
     /// SQL Server implementation for IEmployeeDAL
     /// </summary>
-    public class EmployeeDAL : _BaseDAL, IEmployeeDAL
+    public class EmployeeDAL : _BaseDAL, ICommonDAL<Employee>
     {
         /// <summary>
         /// Ctor
@@ -56,7 +56,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// </summary>
         /// <param name="searchValue">Chuỗi tìm kiếm, chuỗi rỗng nếu lấy tất cả</param>
         /// <returns>Số nhân viên thoả yêu cầu</returns>
-        public int Count(string searchValue)
+        public int Count(string searchValue="")
         {
             int count = 0;
             if (searchValue != "")
@@ -164,7 +164,7 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
 
-        public IList<Employee> List(int page, int pageSize, string searchValue)
+        public IList<Employee> List(int page=1, int pageSize=0, string searchValue="")
         {
             List<Employee> data = new List<Employee>();
             if (searchValue != "")
@@ -183,7 +183,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                                                     OR (Email LIKE @searchValue)
                                                 )
 	                                    ) AS t
-                                    WHERE	t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize";
+                                    WHERE	(@pageSize=0) or (t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize)";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@page", page);

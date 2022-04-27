@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SV19T1021254.DataLayer;
 using SV19T1021254.DomainModel;
 using System.Configuration;
+using SV19T1021254.DataLayer.SQLServer;
 
 namespace SV19T1021254.BussinessLayer
 {
@@ -14,12 +15,12 @@ namespace SV19T1021254.BussinessLayer
     /// </summary>
     public static class CommonDataService
     {
-        private static readonly ICategoryDAL categoryDB;
-        private static readonly ICustomerDAL customerDB;
-        private static readonly ISupplierDAL supplierDB;
-        private static readonly IShipperDAL shipperDB;
-        private static readonly IEmployeeDAL employeeDB;
-        private static readonly ICountryDAL countryDB;
+        private static readonly ICommonDAL<Category> categoryDB;
+        private static readonly ICommonDAL<Customer> customerDB;
+        private static readonly ICommonDAL<Supplier> supplierDB;
+        private static readonly ICommonDAL<Shipper> shipperDB;
+        private static readonly ICommonDAL<Employee> employeeDB;
+        private static readonly ICommonDAL<Country> countryDB;
 
         /// <summary>
         /// Ctor
@@ -45,6 +46,15 @@ namespace SV19T1021254.BussinessLayer
                     //categoryDB = new DataLayer.FakeDB.CategoryDAL();
                     break;
             }
+        }
+
+        /// <summary>
+        /// Danh sách toàn bộ loại hàng
+        /// </summary>
+        /// <returns></returns>
+        public static List<Category> ListOfCategory()
+        {
+            return categoryDB.List().ToList();
         }
         /// <summary>
         /// Lấy danh sách mặt hàng
@@ -112,6 +122,14 @@ namespace SV19T1021254.BussinessLayer
         }
 
         /// <summary>
+        /// Danh sách toàn bộ khách hàng
+        /// </summary>
+        /// <returns></returns>
+        public static List<Customer> ListOfCustomers()
+        {
+            return customerDB.List().ToList();
+        }
+        /// <summary>
         /// Tìm kiếm và lấy danh sách khách hàng dưới dạng phân trang
         /// </summary>
         /// <param name="page"></param>
@@ -172,6 +190,14 @@ namespace SV19T1021254.BussinessLayer
             return customerDB.Delete(customerID);
         }
 
+        /// <summary>
+        /// Danh sách toàn bộ nhà cung cấp
+        /// </summary>
+        /// <returns></returns>
+        public static List<Supplier> ListOfSuppliers()
+        {
+            return supplierDB.List().ToList();
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -235,6 +261,14 @@ namespace SV19T1021254.BussinessLayer
         }
 
         /// <summary>
+        /// Danh sách toàn bộ người giao hàng
+        /// </summary>
+        /// <returns></returns>
+        public static List<Shipper> ListOfShippers()
+        {
+            return shipperDB.List().ToList();
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="page"></param>
@@ -295,6 +329,14 @@ namespace SV19T1021254.BussinessLayer
             return shipperDB.Delete(shipperID);
         }
 
+        /// <summary>
+        /// Danh sách toàn bộ nhân viên
+        /// </summary>
+        /// <returns></returns>
+        public static List<Employee> ListOfEmployees()
+        {
+            return employeeDB.List().ToList();
+        }
         /// <summary>
         /// 
         /// </summary>

@@ -1,13 +1,13 @@
-﻿
+﻿@model SV19T1021254.Web.Models.CategoryPaginationResult 
 @{
     ViewBag.Title = "Loại hàng";
 }
 
-<form action="#" method="get" class="sidebar-form">
+<form action="~/category" method="get" class="sidebar-form">
     <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Tìm...">
+        <input type="text" name="searchValue" class="form-control" placeholder="Tìm tên loại hàng" autocomplete="@Model.SearchValue">
         <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+            <button type="submit" id="search-btn" class="btn btn-flat">
                 <i class="fa fa-search"></i>
             </button>
             <a href="~/category/create" class="btn btn-flat btn-default" style="margin-left:5px">
@@ -16,6 +16,9 @@
         </span>
     </div>
 </form>
+<p>
+    Có tổng cộng <b>@Model.RowCount</b> trong tổng số <b>@Model.PageCount</b> trang.
+</p>
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
@@ -28,48 +31,23 @@
             </tr>
         </thead>
         <tbody>
+            @foreach(var item in Model.Data)
+            {
             <tr>
-                <td>1</td>
-                <td>Beverages</td>
-                <td>Soft drinks, coffees, teas, beers, and ales</td>
-                <td>Drinks</td>
-                <td class="text-center">
-                    <a href="~/category/edit/1" class="btn-xs btn-success" style="margin:1px">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="~/category/delete/1" class="btn-xs btn-warning" style="margin:1px">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Condiments</td>
-                <td>Sweet and savory sauces, relishes, spreads, and seasonings</td>
+                <td>@item.CategoryId</td>
+                <td>@item.CategoryName</td>
+                <td>@item.Description</td>
                 <td>-</td>
                 <td class="text-center">
-                    <a href="#" class="btn-xs btn-success" style="margin:1px">
+                    <a href="~/category/edit/@item.CategoryId" class="btn-xs btn-success" style="margin:1px">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <a href="#" class="btn-xs btn-warning" style="margin:1px">
+                    <a href="~/category/delete/@item.CategoryId" class="btn-xs btn-warning" style="margin:1px">
                         <i class="fa fa-remove"></i>
                     </a>
                 </td>
             </tr>
-            <tr>
-                <td>3</td>
-                <td>Confections</td>
-                <td>Desserts, candies, and sweet breads</td>
-                <td>-</td>
-                <td class="text-center">
-                    <a href="#" class="btn-xs btn-success" style="margin:1px">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" class="btn-xs btn-warning" style="margin:1px">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                </td>
-            </tr>
+            }
         </tbody>
     </table>
 </div>
@@ -77,10 +55,19 @@
 <div class="text-center">
     <ul class="pagination">
         <li><a href="#"><i class="fa fa-backward"></i></a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
+        @for (var i = 1; i <= Model.PageCount; ++i)
+        {
+            if (i == Model.Page)
+            {
+                <li class="active">
+                    <a>@i</a>
+                </li>
+            }
+            else
+            {
+                <li><a href="~/category?page=@i&searchValue=@Model.SearchValue">@i</a></li>
+            }
+        }
         <li><a href="#"><i class="fa fa-forward"></i></a></li>
     </ul>
 </div>
