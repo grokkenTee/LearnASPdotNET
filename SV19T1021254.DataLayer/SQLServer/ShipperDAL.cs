@@ -78,7 +78,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Xoá một người giao hàng trong DB
         /// </summary>
-        /// <param name="shipperID">mã người giao hàng</param>
+        /// <param name="shipperID">Mã người giao hàng</param>
         /// <returns></returns>
         public bool Delete(int shipperID)
         {
@@ -101,7 +101,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Lấy thông tin người giao hàng theo ID
         /// </summary>
-        /// <param name="shipperID">mã người giao hàng</param>
+        /// <param name="shipperID">Mã người giao hàng</param>
         /// <returns></returns>
         public Shipper Get(int shipperID)
         {
@@ -130,9 +130,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Kiểm tra xem thử 1 người giao hàng hiện có dữ liệu nào liên quan không (đơn hàng)
         /// </summary>
-        /// <param name="shipperID"></param>
+        /// <param name="shipperID">Mã người giao hàng</param>
         /// <returns></returns>
         public bool InUsed(int shipperID)
         {
@@ -153,12 +153,12 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Tim kiếm, hiển thị danh sách người giao hàng dưới dạng phân trang
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
+        /// <param name="page">Số trang cần hiển thị</param>
+        /// <param name="pageSize">Số dòng trên mỗi trang</param>
+        /// <param name="searchValue">Tên cần tìm (tương đối). Chuỗi rỗng nếu lấy toàn bộ</param>
+        /// <returns>Danh sách người giao hàng</returns>
         public IList<Shipper> List(int page=1, int pageSize=0, string searchValue="")
         {
             List<Shipper> data = new List<Shipper>();
@@ -199,9 +199,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return data;
         }
         /// <summary>
-        /// 
+        /// Cập nhật thông tin của người giao hàng
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Người giao hàng</param>
         /// <returns></returns>
         public bool Update(Shipper data)
         {

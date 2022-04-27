@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SV19T1021254.DataLayer.SQLServer
 {
     /// <summary>
-    /// SQL Server implementation for IEmployeeDAL
+    /// Định nghĩa các phép xử lí dữ liệu liên quan đến nhân viên.
     /// </summary>
     public class EmployeeDAL : _BaseDAL, ICommonDAL<Employee>
     {
@@ -24,7 +24,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Thêm một nhân viên vào DB
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Nhân viên</param>
         /// <returns></returns>
         public int Add(Employee data)
         {
@@ -108,7 +108,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Lấy thông tin khách hàng theo ID
         /// </summary>
-        /// <param name="employeeID"></param>
+        /// <param name="employeeID">Mã nhân viên</param>
         /// <returns></returns>
         public Employee Get(int employeeID)
         {
@@ -141,9 +141,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Kiểm tra xem thử 1 nhân viên hiện có dữ liệu nào liên quan không (đơn hàng)
         /// </summary>
-        /// <param name="employeeID"></param>
+        /// <param name="employeeID">Mã nhân viên</param>
         /// <returns></returns>
         public bool InUsed(int employeeID)
         {
@@ -163,7 +163,13 @@ namespace SV19T1021254.DataLayer.SQLServer
             }
             return result;
         }
-
+        /// <summary>
+        /// Tim kiếm, hiển thị danh sách nhân viên dưới dạng phân trang
+        /// </summary>
+        /// <param name="page">Số trang cần hiển thị</param>
+        /// <param name="pageSize">Số dòng trên mỗi trang</param>
+        /// <param name="searchValue">Tên cần tìm (tương đối). Chuỗi rỗng nếu lấy toàn bộ</param>
+        /// <returns>Danh sách nhân viên</returns>
         public IList<Employee> List(int page=1, int pageSize=0, string searchValue="")
         {
             List<Employee> data = new List<Employee>();
@@ -210,7 +216,11 @@ namespace SV19T1021254.DataLayer.SQLServer
 
             return data;
         }
-
+        /// <summary>
+        /// Cập nhật thông tin của nhân viên
+        /// </summary>
+        /// <param name="data">Nhân viên</param>
+        /// <returns></returns>
         public bool Update(Employee data)
         {
             bool result = false;

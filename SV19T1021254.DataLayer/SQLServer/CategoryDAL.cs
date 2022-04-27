@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 namespace SV19T1021254.DataLayer.SQLServer
 {
     /// <summary>
-    /// SQL Server implementation for ICategoryDAL
+    /// Định nghĩa các phép xử lý dữ liệu liên quan đến loại hàng
     /// </summary>
     public class CategoryDAL : _BaseDAL, ICommonDAL<Category>
     {
@@ -24,7 +24,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Thêm một loại hàng vào DB
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Loại hàng</param>
         /// <returns></returns>
         public int Add(Category data)
         {
@@ -48,7 +48,7 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// Truy vấn số lượng loại hàng thoả mãn chuỗi tìm kiếm. 
+        /// Đếm số loại hàng dựa theo kết quả tìm kiếm
         /// </summary>
         /// <param name="searchValue">Chuỗi tìm kiếm, chuỗi rỗng nếu lấy tất cả</param>
         /// <returns>Số loại hàng thoả yêu cầu</returns>
@@ -103,7 +103,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Lấy thông tin loại hàng theo ID
         /// </summary>
-        /// <param name="categoryID">mã loại hàng</param>
+        /// <param name="categoryID">Mã loại hàng</param>
         /// <returns></returns>
         public Category Get(int categoryID)
         {
@@ -132,9 +132,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Kiểm tra xem thử 1 loại hàng hiện có dữ liệu nào liên quan không (mặt hàng)
         /// </summary>
-        /// <param name="categoryID"></param>
+        /// <param name="categoryID">Mã loại hàng</param>
         /// <returns></returns>
         public bool InUsed(int categoryID)
         {
@@ -154,7 +154,13 @@ namespace SV19T1021254.DataLayer.SQLServer
             }
             return result;
         }
-
+        /// <summary>
+        /// Tìm kiếm, hiển thị danh sách loại hàng dưới dạng phân trang.
+        /// </summary>
+        /// <param name="page">Số trang</param>
+        /// <param name="pageSize">Số dòng mỗi trang</param>
+        /// <param name="searchValue">Tên loại hàng cần tìm (tương đối). Chuối rỗng nếu lấy toàn bộ.</param>
+        /// <returns></returns>
         public IList<Category> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Category> data = new List<Category>();
@@ -196,11 +202,10 @@ namespace SV19T1021254.DataLayer.SQLServer
 
             return data;
         }
-
         /// <summary>
-        /// 
+        /// Cập nhật thông tin của loại hàng
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Loại hàng</param>
         /// <returns></returns>
         public bool Update(Category data)
         {

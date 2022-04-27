@@ -53,10 +53,10 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// Truy vấn số lượng nhà cung cấp thoả mãn chuỗi tìm kiếm.
+        /// Đếm số nhà cung cấp thoả điều kiện tìm kiếm
         /// </summary>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
+        /// <param name="searchValue">Tên hoặc địa chỉ cần tìm (tương đối). Chuỗi rỗng nếu lấy toàn bộ</param>
+        /// <returns>Sô lượng nhà cung cấp</returns>
         public int Count(string searchValue="")
         {
             int count = 0;
@@ -87,7 +87,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Xoá một nhà cung cấp trong DB
         /// </summary>
-        /// <param name="supplierID"></param>
+        /// <param name="supplierID">Mã nhà cung cấp</param>
         /// <returns></returns>
         public bool Delete(int supplierID)
         {
@@ -110,7 +110,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Lấy nhà cung cấp theo mã nhà cung cấp
         /// </summary>
-        /// <param name="supplierID">mã nhà cung cấp</param>
+        /// <param name="supplierID">Mã nhà cung cấp</param>
         /// <returns></returns>
         public Supplier Get(int supplierID)
         {
@@ -144,9 +144,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Kiểm tra xem thử 1 nhà cung cấp hiện có dữ liệu nào liên quan không (mặt hàng)
         /// </summary>
-        /// <param name="supplierID"></param>
+        /// <param name="supplierID">Mã nhà cung cấp</param>
         /// <returns></returns>
         public bool InUsed(int supplierID)
         {
@@ -168,12 +168,12 @@ namespace SV19T1021254.DataLayer.SQLServer
         }
 
         /// <summary>
-        /// 
+        /// Tim kiếm, hiển thị danh sách nhà cung cấp dưới dạng phân trang
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
+        /// <param name="page">Số trang cần hiển thị</param>
+        /// <param name="pageSize">Số dòng trên mỗi trang</param>
+        /// <param name="searchValue">Tên hoặc địa chỉ cần tìm (tương đối). Chuỗi rỗng nếu lấy toàn bộ</param>
+        /// <returns>Danh sách nhà cung cấp</returns>
         public IList<Supplier> List(int page=1, int pageSize=0, string searchValue="")
         {
             List<Supplier> data = new List<Supplier>();
@@ -223,9 +223,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return data;
         }
         /// <summary>
-        /// 
+        /// Cập nhật thông tin của nhà cung cấp
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Nhà cung cấp</param>
         /// <returns></returns>
         public bool Update(Supplier data)
         {

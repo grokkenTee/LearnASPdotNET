@@ -9,7 +9,7 @@ using System.Data;
 namespace SV19T1021254.DataLayer.SQLServer
 {
     /// <summary>
-    /// SQL Server implementation for ICustomerDAL
+    /// Định nghĩa các phép xử lí dữ liệu liên quan đến khách hàng.
     /// </summary>
     public class CustomerDAL : _BaseDAL, ICommonDAL<Customer>
     {
@@ -107,7 +107,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// Lấy thông tin khách hàng theo ID
         /// </summary>
-        /// <param name="customerID">mã khách hàng</param>
+        /// <param name="customerID">Mã khách hàng</param>
         /// <returns></returns>
         public Customer Get(int customerID)
         {
@@ -140,9 +140,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Kiểm tra xem thử 1 khách hàng hiện có dữ liệu nào liên quan không
         /// </summary>
-        /// <param name="customerID"></param>
+        /// <param name="customerID">Mã khách hàng</param>
         /// <returns></returns>
         public bool InUsed(int customerID)
         {
@@ -163,12 +163,12 @@ namespace SV19T1021254.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Tim kiếm, hiển thị danh sách khách hàng dưới dạng phân trang
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
+        /// <param name="page">Số trang cần hiển thị</param>
+        /// <param name="pageSize">Số dòng trên mỗi trang</param>
+        /// <param name="searchValue">Tên hoặc địa chỉ cần tìm (tương đối). Chuỗi rỗng nếu lấy toàn bộ</param>
+        /// <returns>Danh sách khách hàng</returns>
         public IList<Customer> List(int page=1, int pageSize=0, string searchValue="")
         {
             List<Customer> data = new List<Customer>();
@@ -216,9 +216,9 @@ namespace SV19T1021254.DataLayer.SQLServer
             return data;
         }
         /// <summary>
-        /// 
+        /// Cập nhật thông tin của một khách hàng
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Khách hàng</param>
         /// <returns></returns>
         public bool Update(Customer data)
         {
