@@ -3,15 +3,20 @@
     ViewBag.Title = "Loại hàng";
 }
 
-<form action="~/category" method="get" class="sidebar-form">
+<form action="~/category" method="get">
     <div class="input-group">
-        <input type="text" name="searchValue" class="form-control" placeholder="Tìm tên loại hàng" autocomplete="@Model.SearchValue">
+        <input type="text" name="searchValue"
+               class="form-control"
+               placeholder="Nhập tên loại hàng cần tìm"
+               value="@Model.SearchValue" />
         <span class="input-group-btn">
-            <button type="submit" id="search-btn" class="btn btn-flat">
+            <button type="submit" id="search-btn" class="btn btn-flat btn-info">
                 <i class="fa fa-search"></i>
             </button>
-            <a href="~/category/create" class="btn btn-flat btn-default" style="margin-left:5px">
-                Bổ sung
+            <a href="~/category/create"
+               class="btn btn-flat btn-primary"
+               style="margin-left:5px;">
+                <i class="fa fa-plus"></i> Bổ sung
             </a>
         </span>
     </div>

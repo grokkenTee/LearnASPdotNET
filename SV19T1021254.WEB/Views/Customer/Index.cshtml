@@ -3,15 +3,20 @@
     ViewBag.Title = "Khách hàng";
 }
 
-<form action="~/customer" method="get" class="sidebar-form">
+<form action="~/customer" method="get">
     <div class="input-group">
-        <input type="text" name="searchValue" class="form-control" placeholder="Nhập tên hoặc địa chỉ cần tìm" autocomplete="@Model.SearchValue">
+        <input type="text" name="searchValue"
+               class="form-control"
+               placeholder="Nhập tên hoặc địa chỉ khách hàng cần tìm"
+               value="@Model.SearchValue">
         <span class="input-group-btn">
-            <button type="submit" id="search-btn" class="btn btn-flat">
+            <button type="submit" id="search-btn" class="btn btn-flat btn-info">
                 <i class="fa fa-search"></i>
             </button>
-            <a href="~/customer/create" class="btn btn-flat btn-default" style="margin-left:5px">
-                Bổ sung
+            <a href="~/customer/create"
+               class="btn btn-flat btn-primary"
+               style="margin-left:5px;">
+                <i class="fa fa-plus"></i> Bổ sung
             </a>
         </span>
     </div>

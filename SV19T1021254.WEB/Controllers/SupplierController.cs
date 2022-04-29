@@ -68,7 +68,6 @@ namespace SV19T1021254.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        //TODO: sử dụng cấu trúc model thì tự động ráp tham số vào
         public ActionResult Save(Supplier model)
         {
             //kiểm tra dữ liệu đầu vào k dc null

@@ -12,7 +12,6 @@ namespace SV19T1021254.Web.Controllers
     /// 
     /// </summary>
     [Authorize]
-    //TODO: prefix này?
     [RoutePrefix("customer")]
     public class CustomerController : Controller
     {
@@ -61,7 +60,6 @@ namespace SV19T1021254.Web.Controllers
         /// Giao diện chỉnh sửa khách hàng
         /// </summary>
         /// <returns></returns>
-        //TODO: mô tả tham số truyền vào [Route("edit/{customerID}")]
         [Route("edit/{customerID}")]
         public ActionResult Edit(int customerID)
         {
@@ -77,7 +75,6 @@ namespace SV19T1021254.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        //TODO: sử dụng cấu trúc model thì tự động ráp tham số vào
         public ActionResult Save(Customer model)
         {
             //kiểm tra dữ liệu đầu vào k dc null

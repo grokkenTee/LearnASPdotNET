@@ -9,7 +9,6 @@ using System.Web.Mvc;
 
 namespace SV19T1021254.Web.Controllers
 {
-    // TODO: Chưa code, còn chỗ photo path chưa biết làm
     /// <summary>
     /// 
     /// </summary>
@@ -50,7 +49,7 @@ namespace SV19T1021254.Web.Controllers
             };
 
             ViewBag.Title = "Bổ sung nhân viên";
-            return View();
+            return View(model);
         }
         /// <summary>
         /// 
@@ -130,14 +129,15 @@ namespace SV19T1021254.Web.Controllers
         /// </summary>
         /// <param name="employeeID"></param>
         /// <returns></returns>
+        [Route("delete/{employeeID}")]
         public ActionResult Delete(int employeeID)
         {
             if (Request.HttpMethod == "POST")
             {
-                CommonDataService.DelteCustomer(employeeID);
+                CommonDataService.DelteEmployee(employeeID);
                 return RedirectToAction("Index");
             }
-            var model = CommonDataService.GetCustomer(employeeID);
+            var model = CommonDataService.GetEmployee(employeeID);
             if (model == null)
             {
                 return RedirectToAction("Index");
