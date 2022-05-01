@@ -1,6 +1,8 @@
 ﻿using SV19T1021254.DomainModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +28,28 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <returns>ID của mặt hàng</returns>
         public int Add(Product data)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"INSERT INTO Products(ProductName,CategoryID,SupplierID,Unit,Price,Photo)
+                                    VALUES(@ProductName,@CategoryID,@SupplierID,@Unit,@Price,@Photo);
+                                    SELECT SCOPE_IDENTITY()";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@ProductName",data.ProductName);
+                cmd.Parameters.AddWithValue("@CategoryID", data.CategoryID);
+                cmd.Parameters.AddWithValue("@SupplierID", data.SupplierID);
+                cmd.Parameters.AddWithValue("@Unit", data.Unit);
+                cmd.Parameters.AddWithValue("@Price", data.Price);
+                cmd.Parameters.AddWithValue("@Photo", data.Photo);
+
+                result = (int)cmd.ExecuteScalar();
+
+                cn.Close();
+            }
+            return result;
         }
         /// <summary>
         /// 
