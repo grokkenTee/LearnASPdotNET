@@ -16,8 +16,12 @@ namespace SV19T1021254.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="page"></param>
+        /// <param name="searchValue"></param>
+        /// <param name="categoryID"></param>
+        /// <param name="supplierID"></param>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, string searchValue = "", int? categoryID, int supplierID)
         {
             return View();
         }

@@ -117,7 +117,8 @@ namespace SV19T1021254.BussinessLayer
         /// Lấy danh sách các quốc gia
         /// </summary>
         /// <returns></returns>
-        public static List<Country> ListOfCountries(){
+        public static List<Country> ListOfCountries()
+        {
             return countryDB.List().ToList();
         }
 

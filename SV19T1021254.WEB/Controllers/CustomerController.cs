@@ -18,6 +18,8 @@ namespace SV19T1021254.Web.Controllers
         /// <summary>
         /// Tìm kiếm, hiển thị
         /// </summary>
+        /// <param name="page"></param>
+        /// <param name="searchValue"></param>
         /// <returns></returns>
         public ActionResult Index(int page = 1, string searchValue = "")
         {
