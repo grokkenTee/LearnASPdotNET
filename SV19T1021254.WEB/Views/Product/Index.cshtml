@@ -1,31 +1,32 @@
-﻿@model SV19T1021254.Web.Models.ProductPaginationResult
-@using System.Text.RegularExpressions
+﻿
 @{
     ViewBag.Title = "Mặt hàng";
-    var patern = new Regex(@"^(https?:\/\/)?[0-9a-zA-Z]+\.[-_0-9a-zA-Z]+\.[0-9a-zA-Z]+$");
 }
 
 <div class="box box-primary">
     <div class="box-header with-border ">
     </div>
     <div class="box-body">
-        <form action="~/product" method="get">
+        <form action="#" method="get">
             <div class="row">
                 <div class="col-sm-3">
-                    @Html.DropDownListFor(m => m.CategoryID, SelectListHelper.Categories(), new { @class = "form-control", @onchange = "this.form.submit()" })
-
+                    <select class="form-control" name="category">
+                        <option>-- Loại hàng --</option>
+                        <option>Mỹ phẩm</option>
+                        <option>Thực phẩm</option>
+                    </select>
                 </div>
-
                 <div class="col-sm-3">
-                    @Html.DropDownListFor(m => m.SupplierID, SelectListHelper.Suppliers(), new { @class = "form-control", @onchange = "this.form.submit()" })
-
+                    <select class="form-control" name="category">
+                        <option>-- Nhà cung cấp --</option>
+                        <option>Công ty TNHH Thành Công</option>
+                        <option>Vina Foods</option>
+                    </select>
                 </div>
-
                 <div class="col-sm-6 input-group">
                     <input type="text" name="searchValue"
                            class="form-control"
-                           placeholder="Nhập tên mặt hàng cần tìm"
-                           value="@Model.SearchValue">
+                           placeholder="Nhập tên mặt hàng cần tìm">
                     <span class="input-group-btn">
                         <button type="submit" id="search-btn" class="btn btn-flat btn-info">
                             <i class="fa fa-search"></i>
@@ -41,7 +42,7 @@
         </form>
 
         <p style="margin:10px 0 10px 0">
-            Có <strong>@Model.RowCount</strong> mặt hàng trong tổng số <strong>@Model.PageCount</strong> trang
+            Có <strong>1,210</strong> mặt hàng trong tổng số <strong>101</strong> trang
         </p>
 
         <div class="table-responsive">
@@ -56,31 +57,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var i in Model.Data)
+                    @for (int i = 1; i <= 10; i++)
                     {
-                        <tr>
-                            <td>
-                                @if (patern.IsMatch(i.Photo))
-                                {
-                                    <img src="@i.Photo" style="width:80px" />
-                                }
-                                else
-                                {
-                                    <img src="~/Images/Products/@i.Photo" style="width:80px" />
-                                }
-                            </td>
-                            <td style="vertical-align:middle">@i.ProductName</td>
-                            <td style="vertical-align:middle">@i.Unit</td>
-                            <td style="vertical-align:middle">@i.Price</td>
-                            <td class="text-right" style="vertical-align:middle">
-                                <a href="~/product/edit/@i.ProductID" class="btn btn-xs btn-flat btn-info">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a href="~/product/delete/@i.ProductID" class="btn btn-xs btn-flat btn-danger">
-                                    <i class="fa fa-remove"></i>
-                                </a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <img src="~/Images/Products/Dug-up.jpg" style="width:80px" />
+                        </td>
+                        <td style="vertical-align:middle">Samsung Series 9 NP900X4C Premium Ultrabook</td>
+                        <td style="vertical-align:middle">Fullbox</td>
+                        <td style="vertical-align:middle">23,900,000</td>
+                        <td class="text-right" style="vertical-align:middle">
+                            <a href="~/product/edit/123" class="btn btn-xs btn-flat btn-info">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a href="~/product/delete/123" class="btn btn-xs btn-flat btn-danger">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -89,19 +83,11 @@
 
     <div class="box-footer text-center">
         <ul class="pagination">
-            @for (var i = 1; i <= Model.PageCount; ++i)
-            {
-                if (i == Model.Page)
-                {
-                    <li class="active">
-                        <a>@i</a>
-                    </li>
-                }
-                else
-                {
-                    <li><a href="~/product?page=@i&categoryID=@Model.CategoryID&supplierID=@Model.SupplierID&searchValue=@Model.SearchValue">@i</a></li>
-                }
-            }
+            <li><a href="#">1</a></li>
+            <li class="active"><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
         </ul>
     </div>
 </div>

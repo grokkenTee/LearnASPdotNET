@@ -21,7 +21,6 @@ namespace SV19T1021254.BussinessLayer
         private static readonly ICommonDAL<Shipper> shipperDB;
         private static readonly ICommonDAL<Employee> employeeDB;
         private static readonly ICommonDAL<Country> countryDB;
-        private static readonly ProductDAL productDB;
 
         /// <summary>
         /// Ctor
@@ -40,7 +39,6 @@ namespace SV19T1021254.BussinessLayer
                     shipperDB = new DataLayer.SQLServer.ShipperDAL(connectionString);
                     employeeDB = new DataLayer.SQLServer.EmployeeDAL(connectionString);
                     countryDB = new DataLayer.SQLServer.CountryDAL(connectionString);
-                    productDB = new DataLayer.SQLServer.ProductDAL(connectionString);
                     break;
                 //tình huống nhiều loại DB -> thêm các case
                 //TODO: xoá FakeDB, bổ sung báo lỗi cho trường hợp default?
@@ -54,7 +52,7 @@ namespace SV19T1021254.BussinessLayer
         /// Danh sách toàn bộ loại hàng
         /// </summary>
         /// <returns></returns>
-        public static List<Category> ListOfCategories()
+        public static List<Category> ListOfCategory()
         {
             return categoryDB.List().ToList();
         }
@@ -399,75 +397,6 @@ namespace SV19T1021254.BussinessLayer
             if (employeeDB.InUsed(employeeID))
                 return false;
             return employeeDB.Delete(employeeID);
-        }
-
-        /// <summary>
-        /// Danh sách toàn bộ mặt hàng
-        /// </summary>
-        /// <returns></returns>
-        public static List<Product> ListOfProducts()
-        {
-            return productDB.List().ToList();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="searchValue"></param>
-        /// <param name="rowCount"></param>
-        /// <returns></returns>
-        public static List<Product> ListOfProducts(int page, int pageSize, string searchValue, int categoryID, int supplierID, out int rowCount)
-        {
-            rowCount = productDB.Count(searchValue,categoryID, supplierID);
-            return productDB.List(page, pageSize, searchValue, categoryID, supplierID).ToList();
-        }
-        /// <summary>
-        /// Lấy thông tin 1 mặt hàng từ CSDL
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        public static Product GetProduct(int productID)
-        {
-            return productDB.Get(productID);
-        }
-        /// <summary>
-        /// Thêm một mặt hàng
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static int AddProduct(Product data)
-        {
-            return productDB.Add(data);
-        }
-        /// <summary>
-        /// Cập nhật thông tin mặt hàng
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static bool UpdateProduct(Product data)
-        {
-            return productDB.Update(data);
-        }
-        /// <summary>
-        /// Kiểm tra xem mặt hàng có đơn hàng không
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        public static bool InUsedProduct(int productID)
-        {
-            return productDB.InUsed(productID);
-        }
-        /// <summary>
-        /// Xoá mặt hàng, nếu như đã tồn tại đơn hàng thì không cho phép xoá.
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        public static bool DelteProduct(int productID)
-        {
-            if (productDB.InUsed(productID))
-                return false;
-            return productDB.Delete(productID);
         }
     }
 }

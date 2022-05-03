@@ -85,7 +85,7 @@ namespace SV19T1021254.Web.Controllers
             if (string.IsNullOrWhiteSpace(model.Notes))
                 model.Notes = "";
 
-            // xử lí đầu vào
+            //TODO: xử lí đầu vào
             try
             {
                 model.BirthDate = DateTime.ParseExact(dateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -100,11 +100,12 @@ namespace SV19T1021254.Web.Controllers
                 ViewBag.Title = model.EmployeeID == 0 ? "Bổ sung nhân viên" : "Cập nhật nhân viên";
                 return View("Create", model);
             }
-            // xử lí ảnh
+            //TODO: xử lí ảnh
             if (uploadPhoto != null)
             {
                 //TODO: có những server sẽ cấm lệnh lấy path của web server
                 string path = Server.MapPath("~/images/employees");
+                //TODO: $"" tiện khi viết phép cộng chuối dài
                 string fileName = $"{DateTime.Now.Ticks}-{uploadPhoto.FileName}";
                 string filePath = System.IO.Path.Combine(path, fileName);
                 uploadPhoto.SaveAs(filePath);
