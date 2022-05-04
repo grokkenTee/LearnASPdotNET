@@ -1,5 +1,6 @@
 ﻿using SV19T1021254.BussinessLayer;
 using SV19T1021254.DomainModel;
+using SV19T1021254.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,10 +62,15 @@ namespace SV19T1021254.Web.Controllers
         [Route("edit/{productID}")]
         public ActionResult Edit(int productID)
         {
-            Product model = CommonDataService.GetProduct(productID);
-            if (model == null)
+            Product product = CommonDataService.GetProduct(productID);
+            if (product == null)
                 return RedirectToAction("Index");
-
+            ProductDetailResult model = new ProductDetailResult()
+            {
+                ProductObj = product,
+                ListPhoto = CommonDataService.ListOfProductPhotos(productID),
+                ListAttribute = CommonDataService.ListOfProductAttributes(productID)
+            };
             return View(model);
         }
         /// <summary>
@@ -121,7 +127,7 @@ namespace SV19T1021254.Web.Controllers
                 uploadPhoto.SaveAs(filePath);
                 model.Photo = fileName;
             }
-            
+
             if (model.ProductID == 0)
             {
                 CommonDataService.AddProduct(model);
@@ -141,22 +147,40 @@ namespace SV19T1021254.Web.Controllers
         /// <param name="photoID"></param>
         /// <returns></returns>
         [Route("photo/{method}/{productID}/{photoID?}")]
-        public ActionResult Photo(string method, int productID, int? photoID)
+        public ActionResult Photo(string method, int productID, int? photoID, ProductPhoto data)
         {
+            ProductPhoto model = new ProductPhoto() { PhotoID = 0 };
             switch (method)
             {
                 case "add":
                     ViewBag.Title = "Bổ sung ảnh";
                     break;
+
                 case "edit":
+                    model = CommonDataService.GetProductPhoto(photoID ?? 0);
+                    if (model == null)
+                        return RedirectToAction("Edit", new { productID = productID });
                     ViewBag.Title = "Thay đổi ảnh";
                     break;
+
+                case "save":
+                    if (Request.HttpMethod == "POST")
+                    {
+                        if (data.PhotoID == 0)
+                            CommonDataService.AddProductPhoto(model);
+                        else
+                            CommonDataService.UpdateProductPhoto(model);
+                        return RedirectToAction("Edit", new { productID = productID });
+                    }
+                    break;
+
                 case "delete":
                     return RedirectToAction("Edit", new { productID = productID });
+
                 default:
                     return RedirectToAction("Index");
             }
-            return View();
+            return View(model);
         }
         /// <summary>
         /// 
