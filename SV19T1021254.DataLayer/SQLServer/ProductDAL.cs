@@ -238,10 +238,12 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <param name="pageSize"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
+        
         //public IList<Product> List(int page = 1, int pageSize = 0, string searchValue = "")
         //{
         //    return List(page, pageSize, searchValue);
         //}
+
         /// <summary>
         /// Cập nhật thông tin của 1 mặt hàng
         /// </summary>

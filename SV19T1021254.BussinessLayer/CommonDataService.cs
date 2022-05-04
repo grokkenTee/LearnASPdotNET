@@ -21,7 +21,10 @@ namespace SV19T1021254.BussinessLayer
         private static readonly ICommonDAL<Shipper> shipperDB;
         private static readonly ICommonDAL<Employee> employeeDB;
         private static readonly ICommonDAL<Country> countryDB;
+        
         private static readonly ProductDAL productDB;
+        private static readonly ProductPhotoDAL prodPhotoDB;
+        private static readonly ProductAttributeDAL prodAttributeDB;
 
         /// <summary>
         /// Ctor
@@ -41,6 +44,8 @@ namespace SV19T1021254.BussinessLayer
                     employeeDB = new DataLayer.SQLServer.EmployeeDAL(connectionString);
                     countryDB = new DataLayer.SQLServer.CountryDAL(connectionString);
                     productDB = new DataLayer.SQLServer.ProductDAL(connectionString);
+                    prodPhotoDB = new DataLayer.SQLServer.ProductPhotoDAL(connectionString);
+                    prodAttributeDB = new DataLayer.SQLServer.ProductAttributeDAL(connectionString);
                     break;
                 //tình huống nhiều loại DB -> thêm các case
                 //TODO: xoá FakeDB, bổ sung báo lỗi cho trường hợp default?
@@ -468,6 +473,98 @@ namespace SV19T1021254.BussinessLayer
             if (productDB.InUsed(productID))
                 return false;
             return productDB.Delete(productID);
+        }
+
+        /// <summary>
+        /// Lấy danh sách ảnh
+        /// </summary>
+        /// <param name="productID">Mã mặt hàng</param>
+        /// <returns></returns>
+        public static List<ProductPhoto> ListOfProductPhotos(int productID)
+        {
+            return prodPhotoDB.List(productID).ToList();
+        }
+        /// <summary>
+        /// Lấy thông tin 1 ảnh
+        /// </summary>
+        /// <param name="photoID">Mã ảnh mặt hàng</</param>
+        /// <returns></returns>
+        public static ProductPhoto GetProductPhoto(int photoID)
+        {
+            return prodPhotoDB.Get(photoID);
+        }
+        /// <summary>
+        /// Thêm một ảnh
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddProductPhoto(ProductPhoto data)
+        {
+            return prodPhotoDB.Add(data);
+        }
+        /// <summary>
+        /// Cập nhật 1 ảnh
+        /// </summary>
+        /// <param name="data">Ảnh mặt hàng</param>
+        /// <returns></returns>
+        public static bool UpdateProductPhoto(ProductPhoto data)
+        {
+            return prodPhotoDB.Update(data);
+        }
+        /// <summary>
+        /// Xoá 1 ảnh
+        /// </summary>
+        /// <param name="photoID">Mã ảnh mặt hàng</param>
+        /// <returns></returns>
+        public static bool DeleteProductPhoto(int photoID)
+        {
+            return prodPhotoDB.Delete(photoID);
+        }
+
+        /// <summary>
+        /// Lấy danh sách thuộc tính
+        /// </summary>
+        /// <param name="attributeID">Mã mặt hàng</param>
+        /// <returns></returns>
+        public static List<ProductAttribute> ListOfProductAttributes(int attributeID)
+        {
+            return prodAttributeDB.List(attributeID).ToList();
+        }
+        /// <summary>
+        /// Lấy thông tin 1 thuộc tính
+        /// </summary>
+        /// <param name="photoID">Mã thuộc tính mặt hàng</</param>
+        /// <returns></returns>
+        public static ProductAttribute GetProductAttribute(int attributeID)
+        {
+            return prodAttributeDB.Get(attributeID);
+        }
+        /// <summary>
+        /// Thêm một thuộc tính
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddProductAttribute(ProductAttribute data)
+        {
+            return prodAttributeDB.Add(data);
+        }
+        /// <summary>
+        /// Cập nhật 1 thuộc tính
+        /// </summary>
+        /// <param name="data">thuộc tính mặt hàng</param>
+        /// <returns></returns>
+        public static bool UpdateProductAttribute(ProductAttribute data)
+        {
+            return prodAttributeDB.Update(data);
+        }
+        /// <summary>
+        /// Xoá 1 thuộc tính
+        /// </summary>
+        /// <param name="attributeID">Mã thuộc tính mặt hàng</param>
+        /// <returns></returns>
+        public static bool DeleteProductAttribute(int attributeID)
+        {
+            return prodAttributeDB.Delete(attributeID);
         }
     }
 }
