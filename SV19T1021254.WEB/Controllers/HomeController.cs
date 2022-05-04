@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SV19T1021254.WEB.Controllers
+namespace SV19T1021254.Web.Controllers
 {
     [Authorize]
     public class HomeController : Controller
@@ -28,10 +28,10 @@ namespace SV19T1021254.WEB.Controllers
             return View();
         }
 
-        public ActionResult Categories()
-        {
-            var model = SV19T1021254.BussinessLayer.CommonDataService.Category_list();
-            return View(model);
-        }
+        //public ActionResult Categories()
+        //{
+        //    var model = SV19T1021254.BussinessLayer.CommonDataService.Category_list();
+        //    return View(model);
+        //}
     }
 }

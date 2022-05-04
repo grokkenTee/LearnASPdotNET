@@ -5,14 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace SV_19t1021254.WEB
+namespace SV19T1021254.Web
 {
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            //TODO: Cách đẻ map cái route: 2 cách
+            routes.MapMvcAttributeRoutes();
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
