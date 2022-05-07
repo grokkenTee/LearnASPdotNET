@@ -19,22 +19,35 @@ namespace SV19T1021254.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="searchValue"></param>
         /// <returns></returns>
-        public ActionResult Index(int page = 1, string searchValue = "")
+        public ActionResult Index()
         {
-            int pageSize = 10;
+            Models.PaginationSearchResult model = Session["EMPLOYEE_SEARCH"] as Models.PaginationSearchResult;
+            if (model == null)
+            {
+                model = new Models.PaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = ""
+                };
+            }
+            return View(model);
+        }
+
+        public ActionResult Search(Models.PaginationSearchResult input)
+        {
             int rowCount = 0;
-            var data = CommonDataService.ListOfEmployees(page, pageSize, searchValue, out rowCount);
+            var data = CommonDataService.ListOfEmployees(input.Page, input.PageSize, input.SearchValue, out rowCount);
             Models.EmployeePaginationResult model = new Models.EmployeePaginationResult()
             {
-                Page = page,
-                PageSize = pageSize,
-                SearchValue = searchValue,
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue,
                 RowCount = rowCount,
                 Data = data
             };
+            Session["EMPLOYEE_SEARCH"] = input;
             return View(model);
         }
         /// <summary>
@@ -115,6 +128,12 @@ namespace SV19T1021254.Web.Controllers
             if (model.EmployeeID == 0)
             {
                 CommonDataService.AddEmployee(model);
+                Session["EMPLOYEE_SEARCH"] = new Models.PaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = model.FirstName + " " + model.LastName
+                };
                 return RedirectToAction("Index");
             }
             else

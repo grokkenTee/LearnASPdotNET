@@ -16,23 +16,42 @@ namespace SV19T1021254.Web.Controllers
     public class SupplierController : Controller
     {
         /// <summary>
-        /// Tìm kiêm, hiển thị
+        /// 
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(int page = 1, string searchValue = "")
+        public ActionResult Index()
         {
-            int pageSize = 10;
+            Models.PaginationSearchResult model = Session["SUPPLIER_SEARCH"] as Models.PaginationSearchResult;
+            if (model == null)
+            {
+                model = new Models.PaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = ""
+                };
+            }
+            return View(model);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ActionResult Search(Models.PaginationSearchResult input)
+        {
             int rowCount = 0;
-            var data = CommonDataService.ListOfSuppliers(page, pageSize, searchValue, out rowCount);
+            var data = CommonDataService.ListOfSuppliers(input.Page, input.PageSize, input.SearchValue, out rowCount);
             Models.SupplierPaginationResult model = new Models.SupplierPaginationResult()
             {
-                Page = page,
-                PageSize = pageSize,
-                SearchValue = searchValue,
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue,
                 RowCount = rowCount,
                 Data = data
             };
+            Session["SUPPLIER_SEARCH"] = input;
             return View(model);
         }
         /// <summary>
@@ -96,6 +115,12 @@ namespace SV19T1021254.Web.Controllers
             if (model.SupplierID == 0)
             {
                 CommonDataService.AddSupplier(model);
+                Session["SUPPLIER_SEARCH"] = new Models.PaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = model.SupplierName
+                };
                 return RedirectToAction("Index");
             }
             else

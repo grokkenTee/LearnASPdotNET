@@ -19,19 +19,38 @@ namespace SV19T1021254.Web.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index(int page = 1, string searchValue = "")
+        public ActionResult Index()
         {
-            int pageSize = 10;
+            Models.PaginationSearchResult model = Session["CATEGORY_SEARCH"] as Models.PaginationSearchResult;
+            if (model == null)
+            {
+                model = new Models.PaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = ""
+                };
+            }
+            return View(model);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ActionResult Search(Models.PaginationSearchResult input)
+        {
             int rowCount = 0;
-            var data = CommonDataService.ListOfCategories(page, pageSize, searchValue, out rowCount);
+            var data = CommonDataService.ListOfCategories(input.Page, input.PageSize, input.SearchValue, out rowCount);
             Models.CategoryPaginationResult model = new Models.CategoryPaginationResult()
             {
-                Page = page,
-                PageSize = pageSize,
-                SearchValue = searchValue,
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue,
                 RowCount = rowCount,
                 Data = data
             };
+            Session["CATEGORY_SEARCH"] = input;
             return View(model);
         }
         /// <summary>
@@ -44,7 +63,6 @@ namespace SV19T1021254.Web.Controllers
             {
                 CategoryId = 0
             };
-
             ViewBag.Title = "Bổ sung loại hàng";
             return View(model);
         }
@@ -61,7 +79,45 @@ namespace SV19T1021254.Web.Controllers
                 return RedirectToAction("Index");
 
             ViewBag.Title = "Thay đổi thông tin loại hàng";
-            return View("Create",model);
+            return View("Create", model);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Save(Category model)
+        {
+            //kiểm tra dữ liệu đầu vào k dc null
+            if (string.IsNullOrWhiteSpace(model.CategoryName))
+                ModelState.AddModelError("CategoryName", "Tên khách hàng không được để trống");
+            if (string.IsNullOrWhiteSpace(model.Description))
+                model.Description = "";
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Title = model.CategoryId == 0 ? "Bổ sung loại hàng" : "Thay đổi thông tin";
+                return View("Create", model);
+            }
+
+            //lưu dữ liệu
+            if (model.CategoryId == 0)
+            {
+                CommonDataService.AddCategory(model);
+                Session["CATEGORY_SEARCH"] = new Models.PaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = model.CategoryName
+                };
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                CommonDataService.UpdateCategory(model);
+                return RedirectToAction("Index");
+            }
         }
         /// <summary>
         /// 

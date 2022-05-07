@@ -71,6 +71,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                                                 (LastName LIKE @searchValue)
                                                 OR (FirstName LIKE @searchValue)
                                                 OR (Email LIKE @searchValue)
+                                                OR (FirstName+' '+LastName LIKE @searchValue)
                                             )";
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@searchValue", searchValue);
@@ -187,6 +188,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                                                         (LastName LIKE @searchValue)
                                                     OR (FirstName LIKE @searchValue)
                                                     OR (Email LIKE @searchValue)
+                                                    OR (FirstName+' '+LastName LIKE @searchValue)
                                                 )
 	                                    ) AS t
                                     WHERE	(@pageSize=0) or (t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize)";
