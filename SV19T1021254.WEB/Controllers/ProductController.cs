@@ -19,26 +19,43 @@ namespace SV19T1021254.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="searchValue"></param>
-        /// <param name="categoryID"></param>
-        /// <param name="supplierID"></param>
         /// <returns></returns>
-        public ActionResult Index(int page = 1, string searchValue = "", int categoryID = 0, int supplierID = 0)
+        public ActionResult Index()
         {
-            int pageSize = 10;
+            Models.ProductPaginationSearchResult model = Session["PRODUCT_SEARCH"] as Models.ProductPaginationSearchResult;
+            if (model == null)
+            {
+                model = new Models.ProductPaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = "",
+                    CategoryID = 0,
+                    SupplierID = 0
+                };
+            }
+            return View(model);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ActionResult Search(Models.ProductPaginationSearchResult input)
+        {
             int rowCount = 0;
-            var data = CommonDataService.ListOfProducts(page, pageSize, searchValue, categoryID, supplierID, out rowCount);
+            var data = CommonDataService.ListOfProducts(input.Page, input.PageSize, input.SearchValue, input.CategoryID, input.SupplierID, out rowCount);
             Models.ProductPaginationResult model = new Models.ProductPaginationResult()
             {
-                Page = page,
-                PageSize = pageSize,
-                SearchValue = searchValue,
-                CategoryID = categoryID,
-                SupplierID = supplierID,
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue,
+                CategoryID = input.CategoryID,
+                SupplierID = input.SupplierID,
                 RowCount = rowCount,
                 Data = data
             };
+            Session["PRODUCT_SEARCH"] = input;
             return View(model);
         }
         /// <summary>
@@ -71,26 +88,6 @@ namespace SV19T1021254.Web.Controllers
                 ListPhoto = CommonDataService.ListOfProductPhotos(productID),
                 ListAttribute = CommonDataService.ListOfProductAttributes(productID)
             };
-            return View(model);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        [Route("delete/{productID}")]
-        public ActionResult Delete(int productID)
-        {
-            if (Request.HttpMethod == "POST")
-            {
-                CommonDataService.DelteProduct(productID);
-                return RedirectToAction("Index");
-            }
-            var model = CommonDataService.GetProduct(productID);
-            if (model == null)
-            {
-                return RedirectToAction("Index");
-            }
             return View(model);
         }
         /// <summary>
@@ -131,6 +128,14 @@ namespace SV19T1021254.Web.Controllers
             if (model.ProductID == 0)
             {
                 CommonDataService.AddProduct(model);
+                Session["PRODUCT_SEARCH"] = new Models.ProductPaginationSearchResult()
+                {
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = model.ProductName,
+                    CategoryID = model.CategoryID,
+                    SupplierID = model.SupplierID
+                };
                 return RedirectToAction("Index");
             }
             else
@@ -138,6 +143,26 @@ namespace SV19T1021254.Web.Controllers
                 CommonDataService.UpdateProduct(model);
                 return RedirectToAction("Index");
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        [Route("delete/{productID}")]
+        public ActionResult Delete(int productID)
+        {
+            if (Request.HttpMethod == "POST")
+            {
+                CommonDataService.DelteProduct(productID);
+                return RedirectToAction("Index");
+            }
+            var model = CommonDataService.GetProduct(productID);
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
         /// <summary>
         /// 

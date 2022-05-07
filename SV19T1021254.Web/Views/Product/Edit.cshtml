@@ -1,7 +1,9 @@
 ﻿@model SV19T1021254.DomainModel.Product
+@using SV19T1021254.BussinessLayer
 @{
     ViewBag.Title = "Cập nhật mặt hàng";
-    
+    var listPhoto = CommonDataService.ListOfProductPhotos(Model.ProductID);
+    var listAttrib = CommonDataService.ListOfProductAttributes(Model.ProductID);
 }
 
 <div class="box box-primary">
@@ -67,8 +69,8 @@
 
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
-                   <input type="hidden" name="Photo" value="@Model.Photo" />
-                   <img id="Photo" src="~/Images/Products/@Model.Photo" class="img img-bordered" style="width:150px" />
+                    <input type="hidden" name="Photo" value="@Model.Photo" />
+                    <img id="Photo" src="~/Images/Products/@Model.Photo" class="img img-bordered" style="width:150px" />
                 </div>
             </div>
 
@@ -106,29 +108,35 @@
                     <th>Thứ tự hiển thị</th>
                     <th>Ẩn ảnh</th>
                     <th class="text-right">
-                        <a class="btn btn-xs btn-primary" href="~/product/photo/add/111">
+                        <a class="btn btn-xs btn-primary" href="~/product/photo/add">
                             <i class="fa fa-plus"></i>
                         </a>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 1; i <= 3; i++)
+                @if (listPhoto.Count == 0)
+                {
+                    <p class="text-center" style="font-size:20px; font:bold">Kho ảnh hiện trống</p>
+                }
+                @foreach (var photo in listPhoto)
                 {
                     <tr>
                         <td style="vertical-align:middle">
-                            <img src="~/Images/Products/Dug-up.jpg" alt="" style="width:100px" />
+                            <img src="@photo.Photo" alt="" style="width:100px" />
                         </td>
                         <td style="vertical-align:middle;">
-                            LAPTOP SAMSUNG SERIES 9 NP900X4C i5 3337U 8GB SSD 128GB
+                            @photo.Description
                         </td>
-                        <td style="vertical-align:middle;">@i</td>
-                        <td style="vertical-align:middle;"></td>
+                        <td style="vertical-align:middle;">@photo.DisplayOrder</td>
+                        <td style="vertical-align:middle;">
+                            <input type="checkbox" value="@photo.IsHidden" disabled />
+                        </td>
                         <td style="vertical-align:middle; text-align:right">
-                            <a class="btn btn-xs btn-primary" href="~/product/photo/edit/111/222">
+                            <a class="btn btn-xs btn-primary" href="~/product/photo/edit/@Model.ProductID/@photo.PhotoID">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a class="btn btn-xs btn-danger" href="~/product/photo/delete/111/222">
+                            <a class="btn btn-xs btn-danger" href="~/product/photo/delete/@Model.ProductID/@photo.PhotoID">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </td>

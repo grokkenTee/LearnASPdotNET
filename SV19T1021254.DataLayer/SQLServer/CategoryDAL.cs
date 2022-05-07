@@ -164,7 +164,8 @@ namespace SV19T1021254.DataLayer.SQLServer
         public IList<Category> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
             List<Category> data = new List<Category>();
-
+            if (searchValue != "")
+                searchValue = "%" + searchValue + "%";
             using (SqlConnection cn = OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand();
@@ -173,9 +174,8 @@ namespace SV19T1021254.DataLayer.SQLServer
 	                                    (	SELECT	*, ROW_NUMBER() OVER(ORDER BY CategoryName) AS [RowNumber]
 		                                    FROM	Categories
 		                                    WHERE  (@searchValue = N'')
-			                                    or (
-                                                        (CategoryName LIKE @searchValue)
-                                                    OR  (Description LIKE @searchValue)
+			                                    OR ( (CategoryName LIKE @searchValue)
+                                                OR   (Description LIKE @searchValue)
                                                    )
 	                                    ) AS t
                                     WHERE	(@pageSize=0) or (t.RowNumber BETWEEN (@page-1)*@pageSize+1 AND @page*@pageSize)";
