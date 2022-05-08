@@ -20,7 +20,7 @@ namespace SV19T1021254.Web.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult Index(int? categoryID, int? supplierID)
         {
             Models.ProductPaginationSearchResult model = Session["PRODUCT_SEARCH"] as Models.ProductPaginationSearchResult;
             if (model == null)
@@ -30,8 +30,8 @@ namespace SV19T1021254.Web.Controllers
                     Page = 1,
                     PageSize = 10,
                     SearchValue = "",
-                    CategoryID = 0,
-                    SupplierID = 0
+                    CategoryID = categoryID ?? 0,
+                    SupplierID = supplierID ?? 0
                 };
             }
             return View(model);

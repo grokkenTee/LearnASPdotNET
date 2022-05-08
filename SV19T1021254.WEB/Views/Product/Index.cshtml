@@ -38,6 +38,7 @@
                 </div>
             </div>
         </form>
+        <button id="resetSearch" class="btn btn-group-sm btn-danger"><i class="fa fa-remove"></i>Xoá bộ tìm kiếm</button>
 
         <div id="searchResult">
 
@@ -55,6 +56,10 @@
     <script>
         $(document).ready(function () {
             doSearch(@Model.Page);
+            $("#resetSearch").click(function () {
+                clearForm();
+                doSearch(1);
+            })
             $("#searchInput").submit(function (e) {
                 e.preventDefault();
                 doSearch(1);
@@ -64,9 +69,6 @@
                 doSearch(1);
                 return false;
             });
-            $("#resetSearch").click(function () {
-                clearForm($(this));
-            })
         });
 
     </script>
