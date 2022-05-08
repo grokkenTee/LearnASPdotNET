@@ -1,0 +1,66 @@
+﻿@model IList<SV19T1021254.DomainModel.ProductPhoto>
+@{
+    Layout = null;
+}
+
+<div class="box box-info">
+    <div class="box-header with-border ">
+        <h3 class="box-title">Thư viện ảnh</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr class="bg-gray">
+                    <th>Ảnh</th>
+                    <th>Mô tả/tiêu đề</th>
+                    <th>Thứ tự hiển thị</th>
+                    <th>Ẩn ảnh</th>
+                    <th class="text-right">
+                        <a class="btn btn-xs btn-primary" href="~/product/photo/add/@ViewBag.ProductID">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <p class="text-center" style="font-size:20px; font:bold">Kho ảnh hiện trống</p>
+                }
+                else
+                {
+                    foreach (var photo in Model)
+                    {
+                        <tr>
+                            <td style="vertical-align:middle">
+                                <img src="@photo.Photo" alt="" style="width:100px" />
+                            </td>
+                            <td style="vertical-align:middle;">
+                                @photo.Description
+                            </td>
+                            <td style="vertical-align:middle;">@photo.DisplayOrder</td>
+                            <td style="vertical-align:middle;">
+                                <input type="checkbox" value="@photo.IsHidden" disabled />
+                            </td>
+                            <td style="vertical-align:middle; text-align:right">
+                                <a class="btn btn-xs btn-primary" href="~/product/photo/edit/@photo.ProductID/@photo.PhotoID">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a class="btn btn-xs btn-danger" href="~/product/photo/delete/@photo.ProductID/@photo.PhotoID">
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="box-footer text-center">
+    </div>
+</div>

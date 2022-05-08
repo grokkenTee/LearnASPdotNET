@@ -68,7 +68,6 @@ namespace SV19T1021254.Web.Controllers
             {
                 ProductID = 0
             };
-
             return View(model);
         }
         /// <summary>
@@ -79,15 +78,10 @@ namespace SV19T1021254.Web.Controllers
         [Route("edit/{productID}")]
         public ActionResult Edit(int productID)
         {
-            Product product = CommonDataService.GetProduct(productID);
-            if (product == null)
+            Product model = CommonDataService.GetProduct(productID);
+            if (model == null)
                 return RedirectToAction("Index");
-            ProductDetailResult model = new ProductDetailResult()
-            {
-                ProductObj = product,
-                ListPhoto = CommonDataService.ListOfProductPhotos(productID),
-                ListAttribute = CommonDataService.ListOfProductAttributes(productID)
-            };
+
             return View(model);
         }
         /// <summary>
@@ -171,40 +165,57 @@ namespace SV19T1021254.Web.Controllers
         /// <param name="productID"></param>
         /// <param name="photoID"></param>
         /// <returns></returns>
-        [Route("photo/{method}/{productID}/{photoID?}")]
-        public ActionResult Photo(string method, int productID, int? photoID, ProductPhoto data)
+        [Route("photo/{method}/{productID:int}/{photoID:int?}")]
+        [AcceptVerbs("GET", "POST")]
+        public ActionResult Photo(ProductPhoto data, string uploadPhoto, string method, int productID, int photoID = 0)
         {
-            ProductPhoto model = new ProductPhoto() { PhotoID = 0 };
+            ProductPhoto model = new ProductPhoto() { PhotoID = 0, ProductID = productID };
+            Boolean redirectToEdit = false;
             switch (method)
             {
+                case "list":
+                    IList<ProductPhoto> listPhoto = CommonDataService.ListOfProductPhotos(productID);
+                    ViewBag.ProductID = productID;
+                    return View("ListPhoto", listPhoto);
+
                 case "add":
                     ViewBag.Title = "Bổ sung ảnh";
                     break;
-
+                    
                 case "edit":
-                    model = CommonDataService.GetProductPhoto(photoID ?? 0);
+                    model = CommonDataService.GetProductPhoto(photoID);
                     if (model == null)
-                        return RedirectToAction("Edit", new { productID = productID });
+                    {
+                        redirectToEdit = true;
+                        break;
+                    }
                     ViewBag.Title = "Thay đổi ảnh";
                     break;
-
+                //RECENT Xử lí Save như nào?
                 case "save":
                     if (Request.HttpMethod == "POST")
                     {
                         if (data.PhotoID == 0)
-                            CommonDataService.AddProductPhoto(model);
+                            CommonDataService.AddProductPhoto(data);
                         else
-                            CommonDataService.UpdateProductPhoto(model);
-                        return RedirectToAction("Edit", new { productID = productID });
+                            CommonDataService.UpdateProductPhoto(data);
                     }
+                    return Json(data);
+                    redirectToEdit = true;
                     break;
 
                 case "delete":
-                    return RedirectToAction("Edit", new { productID = productID });
+                    model = CommonDataService.GetProductPhoto(photoID);
+                    if (model != null)
+                        CommonDataService.DeleteProductPhoto(photoID);
+                    redirectToEdit = true;
+                    break;
 
                 default:
                     return RedirectToAction("Index");
             }
+            if (redirectToEdit)
+                return RedirectToAction("Edit", new { productID = productID });
             return View(model);
         }
         /// <summary>
@@ -215,22 +226,53 @@ namespace SV19T1021254.Web.Controllers
         /// <param name="attributeID"></param>
         /// <returns></returns>
         [Route("attribute/{method}/{productID}/{attributeID?}")]
-        public ActionResult Attribute(string method, int productID, int? attributeID)
+        public ActionResult Attribute(string method, int productID, int? attributeID, ProductAttribute input)
         {
+            ProductAttribute model = new ProductAttribute() { AttributeID = 0 };
+            Boolean redirectToEdit = false;
             switch (method)
             {
+                case "list":
+                    IList<ProductAttribute> listAttribute = CommonDataService.ListOfProductAttributes(productID);
+                    ViewBag.ProductID = productID;
+                    return View("ListAttribute", listAttribute);
+
                 case "add":
                     ViewBag.Title = "Bổ sung thuộc tính";
                     break;
+
                 case "edit":
+                    if (CommonDataService.GetProductPhoto(attributeID ?? 0) == null)
+                    {
+                        redirectToEdit = true;
+                        break;
+                    }
                     ViewBag.Title = "Thay đổi thuộc tính";
                     break;
+                
+                case "save":
+                    if (Request.HttpMethod == "POST")
+                    {
+                        if (input.AttributeID == 0)
+                            CommonDataService.AddProductAttribute(input);
+                        else
+                            CommonDataService.UpdateProductAttribute(input);
+                    }
+                    redirectToEdit = true;
+                    break;
+
                 case "delete":
-                    return RedirectToAction("Edit", new { productID = productID });
+                    if (Request.HttpMethod == "POST")
+                        CommonDataService.DeleteProductAttribute(attributeID ?? 0);
+                    redirectToEdit = true;
+                    break;
+
                 default:
                     return RedirectToAction("Index");
             }
-            return View();
+            if (redirectToEdit)
+                return RedirectToAction("Edit", new { productID = productID });
+            return View(model);
         }
     }
 }

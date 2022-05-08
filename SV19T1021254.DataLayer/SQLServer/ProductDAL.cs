@@ -93,7 +93,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <returns></returns>
         public int Count(string searchValue = "")
         {
-            return Count(searchValue);
+            return Count(searchValue,0,0);
         }
         /// <summary>
         /// Xoá một mặt hàng trong DB

@@ -48,7 +48,7 @@ namespace SV19T1021254.BussinessLayer
                     prodAttributeDB = new DataLayer.SQLServer.ProductAttributeDAL(connectionString);
                     break;
                 //tình huống nhiều loại DB -> thêm các case
-                //TODO: xoá FakeDB, bổ sung báo lỗi cho trường hợp default?
+                //TOLEARN: xoá FakeDB, bổ sung báo lỗi cho trường hợp default?
                 default:
                     //categoryDB = new DataLayer.FakeDB.CategoryDAL();
                     break;
@@ -483,6 +483,15 @@ namespace SV19T1021254.BussinessLayer
         public static List<ProductPhoto> ListOfProductPhotos(int productID)
         {
             return prodPhotoDB.List(productID).ToList();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public static int GetMaxPhotoID(int productID)
+        {
+            return prodPhotoDB.GetMaxID(productID);
         }
         /// <summary>
         /// Lấy thông tin 1 ảnh

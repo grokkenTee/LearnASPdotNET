@@ -14,7 +14,7 @@ namespace SV19T1021254.Web.Models
         /// <summary>
         /// Mặt hàng
         /// </summary>
-        public Product ProductObj { get; set; }
+        public Product Product { get; set; }
         /// <summary>
         /// Danh sách ảnh
         /// </summary>

@@ -39,7 +39,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Connection = cn;
 
                 cmd.Parameters.AddWithValue("@productID", productID);
-                //TODO Xem lại cái CommandBehavior
+                //TOLEARN Xem lại cái CommandBehavior
                 var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dbReader.Read())
                 {
@@ -57,6 +57,56 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cn.Close();
             }
             return data;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public int Count(int productID)
+        {
+            int count = 0;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"SELECT    COUNT(*)
+                                    FROM    ProductPhotos
+                                    WHERE   ProductID = @productId";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@productId", productID);
+
+                count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
+            }
+            return count;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public int GetMaxID(int productID)
+        {
+            int maxID = 0;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"SELECT    Max(PhotoID)
+                                    FROM    ProductPhotos
+                                    WHERE   ProductID = @productId";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@productId", productID);
+
+                maxID = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
+            }
+            return maxID;
         }
         /// <summary>
         /// 

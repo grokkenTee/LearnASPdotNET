@@ -157,6 +157,7 @@
     <Content Include="images\products\Dug-up.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="jsconfig.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -5823,6 +5824,9 @@
     <Content Include="Views\Category\Search.cshtml" />
     <Content Include="Views\Supplier\Search.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
+    <Content Include="Views\Product\ListPhoto.cshtml" />
+    <Content Include="Views\Product\ListAttribute.cshtml" />
+    <Content Include="Views\Product\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -116,14 +116,14 @@ namespace SV19T1021254.Web.Controllers
             // xử lí ảnh
             if (uploadPhoto != null)
             {
-                //TODO: có những server sẽ cấm lệnh lấy path của web server
+                //TOLEARN: có những server sẽ cấm lệnh lấy path của web server
                 string path = Server.MapPath("~/images/employees");
                 string fileName = $"{DateTime.Now.Ticks}-{uploadPhoto.FileName}";
                 string filePath = System.IO.Path.Combine(path, fileName);
                 uploadPhoto.SaveAs(filePath);
                 model.Photo = fileName;
             }
-            //TODO: cách kiểm tra dữ liệu 
+            //TOLEARN: cách kiểm tra dữ liệu 
             //return Json(model);
             if (model.EmployeeID == 0)
             {

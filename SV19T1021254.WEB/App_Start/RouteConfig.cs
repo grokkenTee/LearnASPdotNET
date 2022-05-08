@@ -12,7 +12,7 @@ namespace SV19T1021254.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            //TODO: Cách đẻ map cái route: 2 cách
+            //TOLEARN: Cách đẻ map cái route: 2 cách
             routes.MapMvcAttributeRoutes();
             routes.MapRoute(
                 name: "Default",
