@@ -34,6 +34,16 @@
                     <td>@item.City</td>
                     <td>@item.PostalCode</td>
                     <td class="text-center">
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                <i class="fa fa-bars"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/product?supplierID=@item.SupplierID">Đi đến mặt hàng</a></li>
+
+                            </ul>
+                        </div>
                         <a href="~/supplier/edit/@item.SupplierID" class="btn-xs btn-success" style="margin:1px">
                             <i class="fa fa-edit"></i>
                         </a>

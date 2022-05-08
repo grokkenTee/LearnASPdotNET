@@ -14,7 +14,7 @@ function doSearch(page) {
     });
 }
 
-function clearForm($form) {
-    $form.find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, :select').val('');
-    $form.find(':checkbox, :radio, :select').prop('checked', false);
+function clearForm() {
+    $("input:text").val("");
+    $("select").val("0");
 }
