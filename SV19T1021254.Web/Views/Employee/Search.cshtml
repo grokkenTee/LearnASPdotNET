@@ -1,6 +1,8 @@
 ﻿@model SV19T1021254.Web.Models.EmployeePaginationResult
+@using System.Text.RegularExpressions
 @{
     Layout = null;
+    var patern = new Regex(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*).*");
 }
 
 <p style="margin:10px 0 10px 0">
@@ -27,7 +29,14 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-4">
-                            <img class="profile-user-img img-responsive img-bordered" src="~/Images/Employees/@item.Photo">
+                            @if (patern.IsMatch(item.Photo))
+                            {
+                                <img class="profile-user-img img-responsive img-bordered" src="@item.Photo">
+                            }
+                            else
+                            {
+                                <img class="profile-user-img img-responsive img-bordered" src="~/Images/Employees/@item.Photo">
+                            }
                         </div>
                         <div class="col-sm-8">
                             <ul class="list-group list-group-unbordered">
@@ -64,7 +73,7 @@
             }
             else
             {
-                <li><a href="javascript(0);" onclick="doSearch(@i)">@i</a></li>
+                <li><a href="javascript:;" onclick="doSearch(@i)">@i</a></li>
             }
         }
     </ul>
