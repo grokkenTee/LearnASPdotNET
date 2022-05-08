@@ -1,0 +1,72 @@
+﻿@model IList<SV19T1021254.DomainModel.ProductAttribute>
+@{
+    Layout = null;
+}
+
+<div class="box box-success">
+    <div class="box-header with-border ">
+        <h3 class="box-title">Thuộc tính của mặt hàng</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="box-body">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr class="bg-gray">
+                    <th>Tên thuộc tính</th>
+                    <th>Giá trị thuộc tính</th>
+                    <th>Thứ tự hiển thị</th>
+                    <th class="text-right">
+                        <a class="btn btn-xs btn-primary" href="~/product/attribute/add/@ViewBag.ProductID">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <p class="text-center" style="font-size:20px; font:bold">Kho ảnh hiện trống</p>
+                }
+                //TODO Chưa xử lí hiển thị
+                else
+                {
+
+                }
+                    <tr>
+                        <td style="vertical-align:middle">CPU</td>
+                        <td style="vertical-align:middle;">Intel Core i5 3337U 1.8GHz</td>
+                        <td style="vertical-align:middle;">1</td>
+                        <td style="vertical-align:middle; text-align:right">
+                            <a class="btn btn-xs btn-primary" href="~/product/attribute/edit/111/222">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a class="btn btn-xs btn-danger" href="~/product/attribute/delete/111/222">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:middle">DISPLAY</td>
+                        <td style="vertical-align:middle;">15.6" Led 1600*900</td>
+                        <td style="vertical-align:middle;">2</td>
+                        <td style="vertical-align:middle; text-align:right">
+                            <a class="btn btn-xs btn-primary" href="~/product/edit-attribute/123">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a class="btn btn-xs btn-danger" href="~/product/delete-attribute/123">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="box-footer text-center">
+    </div>
+
+</div>

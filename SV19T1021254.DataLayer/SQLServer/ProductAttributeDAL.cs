@@ -39,7 +39,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.Connection = cn;
 
                 cmd.Parameters.AddWithValue("@productID", productID);
-                //TODO Xem lại cái CommandBehavior
+                //TOLEARN Xem lại cái CommandBehavior
                 var dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dbReader.Read())
                 {
@@ -62,6 +62,7 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// </summary>
         /// <param name="attributeID"></param>
         /// <returns></returns>
+        //RECENT Thêm Count()? và GetMaxID().
         public ProductAttribute Get(int attributeID)
         {
             ProductAttribute result = null;
