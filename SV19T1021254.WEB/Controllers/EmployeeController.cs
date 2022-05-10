@@ -89,12 +89,14 @@ namespace SV19T1021254.Web.Controllers
         [HttpPost]
         public ActionResult Save(Employee model, string dateOfBirth, HttpPostedFileBase uploadPhoto)
         {
+            string email = model.Email;
             if (string.IsNullOrWhiteSpace(model.FirstName))
                 ModelState.AddModelError("FirstName", "Tên không được để trống");
             if (string.IsNullOrWhiteSpace(model.LastName))
                 ModelState.AddModelError("LastName", "Họ không được để trống");
             if (string.IsNullOrWhiteSpace(model.Email))
                 ModelState.AddModelError("Email", "Emailkhông được để trống");
+          //TODO cần validate email để k bị trùng
             if (string.IsNullOrWhiteSpace(model.Notes))
                 model.Notes = "";
 

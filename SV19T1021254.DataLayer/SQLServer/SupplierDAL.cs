@@ -241,10 +241,11 @@ namespace SV19T1021254.DataLayer.SQLServer
                                         PostalCode = @PostalCode,
                                         Country = @Country,
                                         Phone = @Phone
-                                    WHERE CustomerID = @CustomerID";
+                                    WHERE SupplierID = @SupplierID";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
 
+                cmd.Parameters.AddWithValue("@SupplierID", data.SupplierID);
                 cmd.Parameters.AddWithValue("@SupplierName", data.SupplierName);
                 cmd.Parameters.AddWithValue("@ContactName", data.ContactName);
                 cmd.Parameters.AddWithValue("@Address", data.Address);

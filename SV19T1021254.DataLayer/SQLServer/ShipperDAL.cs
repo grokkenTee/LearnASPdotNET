@@ -216,6 +216,7 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = cn;
 
+                cmd.Parameters.AddWithValue("@ShipperID", data.ShipperID);
                 cmd.Parameters.AddWithValue("@ShipperName", data.ShipperName);
                 cmd.Parameters.AddWithValue("@Phone", data.Phone);
 

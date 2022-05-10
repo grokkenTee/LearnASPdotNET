@@ -1,6 +1,8 @@
 ﻿@model SV19T1021254.DomainModel.Product
+@using System.Text.RegularExpressions
 @{
     ViewBag.Title = "Cập nhật mặt hàng";
+    var patern = new Regex(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*).*");
 }
 <div class="box box-primary">
     <div class="box-header with-border ">
@@ -66,7 +68,15 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
                     <input type="hidden" name="Photo" value="@Model.Photo" />
-                    <img id="Photo" src="~/Images/Products/@Model.Photo" class="img img-bordered" style="width:150px" />
+                    @if (patern.IsMatch(Model.Photo))
+                    {
+                        <img id="Photo" src="@Model.Photo" class="img img-bordered" style="width:150px" />
+                    }
+                    else
+                    {
+                        <img id="Photo" src="~/Images/Products/@Model.Photo" class="img img-bordered" style="width:150px" />
+                    }
+
                 </div>
             </div>
 
@@ -100,13 +110,13 @@
             $("#photo").load("/product/photo/list/@Model.ProductID");
         };
         function listAttribute(productID) {
-            $("#attribute").load()
+            $("#attribute").load("/product/attribute/list/@Model.ProductID");
         }
     </script>
     <script>
         $(document).ready(function () {
             listPhoto(@Model.ProductID);
-            
+            listAttribute(@Model.ProductID);
         });
     </script>
 }

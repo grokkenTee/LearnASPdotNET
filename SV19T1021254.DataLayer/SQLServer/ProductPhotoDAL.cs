@@ -12,7 +12,7 @@ namespace SV19T1021254.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class ProductPhotoDAL : _BaseDAL
+    public class ProductPhotoDAL : _BaseDAL, IProductDetailDAL<ProductPhoto>
     {
         /// <summary>
         /// Ctor
@@ -82,31 +82,6 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cn.Close();
             }
             return count;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        public int GetMaxID(int productID)
-        {
-            int maxID = 0;
-            using (SqlConnection cn = OpenConnection())
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = @"SELECT    Max(PhotoID)
-                                    FROM    ProductPhotos
-                                    WHERE   ProductID = @productId";
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = cn;
-
-                cmd.Parameters.AddWithValue("@productId", productID);
-
-                maxID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                cn.Close();
-            }
-            return maxID;
         }
         /// <summary>
         /// 
@@ -228,6 +203,11 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cn.Close();
             }
             return result;
+        }
+
+        public bool InUsed(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model SV19T1021254.DomainModel.Account
 @{
     Layout = null;
 }
@@ -41,13 +41,16 @@
             <p class="login-box-msg">Sign in to start your session</p>
 
             <form action="~/account/login" method="post">
+                @Html.ValidationMessage("Failed", new { @class = "text-danger" });
                 <div class="form-group has-feedback">
-                    <input name="username" type="text" class="form-control" placeholder="Username" autofocus value="@ViewBag.UserName">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Username", @autofocus = "" })
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group has-feedback">
-                    <input name="password" type="password" class="form-control" placeholder="Password" value="@ViewBag.PassWord">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
@@ -62,7 +65,7 @@
                 </div>
             </form>
 
-            
+
             <!-- /.social-auth-links -->
 
             <a href="#">I forgot my password</a><br>
@@ -78,13 +81,14 @@
     <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- iCheck -->
     <script src="../../plugins/iCheck/icheck.min.js"></script>
-    <script>$(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' /* optional */
-    });
-  });</script>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        });</script>
 </body>
 </html>
 

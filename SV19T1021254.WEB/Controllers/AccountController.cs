@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SV19T1021254.BussinessLayer;
+using SV19T1021254.DomainModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,7 +22,7 @@ namespace SVT19T1021254.WEB.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            return View(new Account());
         }
         /// <summary>
         /// 
@@ -30,18 +32,21 @@ namespace SVT19T1021254.WEB.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(string username, string password)
+        public ActionResult Login(Account model)
         {
-            //TODO: code lại phần check đăng nhập
-            if(username =="admin" && password == "123")
-            {
-                System.Web.Security.FormsAuthentication.SetAuthCookie(username, false);
-                return RedirectToAction("Index", "Home");
-            }
-            ViewBag.UserName = username;
-            ViewBag.PassWord = password;
-            ViewBag.Message = "Đăng nhập thất bại";
-            return View();
+            if (string.IsNullOrWhiteSpace(model.Email))
+                ModelState.AddModelError("Email", "Email hiện trống");
+            if (string.IsNullOrWhiteSpace(model.Password))
+                ModelState.AddModelError("Password", "Password hiện trống");
+            if (ModelState.IsValid)
+                if (AccountService.LoginSuccess(model))
+                {
+                    System.Web.Security.FormsAuthentication.SetAuthCookie(model.Email, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                    ModelState.AddModelError("Failed", "Email hoặc password không đúng");
+            return View(model);
         }
         /// <summary>
         /// 

@@ -9,7 +9,7 @@
             <h3 class="box-title">&nbsp;</h3>
         </div>
 
-        <form class="form-horizontal" action="~/supplier/save">
+        <form class="form-horizontal" action="~/supplier/save" method="post">
             <div class="box-body">
                 @Html.HiddenFor(m => m.SupplierID)
 
@@ -81,7 +81,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-save"></i>Lưu dữ liệu
                         </button>
-                        <a href="~/customer" class="btn btn-warning">
+                        <a href="~/supplier" class="btn btn-warning">
                             <i class="fa fa-ban"></i> Hoàn tác
                         </a>
                     </div>

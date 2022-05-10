@@ -167,7 +167,7 @@ namespace SV19T1021254.Web.Controllers
         /// <returns></returns>
         [Route("photo/{method}/{productID:int}/{photoID:int?}")]
         [AcceptVerbs("GET", "POST")]
-        public ActionResult Photo(ProductPhoto data, string uploadPhoto, string method, int productID, int photoID = 0)
+        public ActionResult Photo(ProductPhoto data, HttpPostedFileBase uploadPhoto, string method, int productID, int photoID = 0)
         {
             ProductPhoto model = new ProductPhoto() { PhotoID = 0, ProductID = productID };
             Boolean redirectToEdit = false;
@@ -195,6 +195,14 @@ namespace SV19T1021254.Web.Controllers
                 case "save":
                     if (Request.HttpMethod == "POST")
                     {
+                        if (uploadPhoto != null)
+                        {
+                            string path = Server.MapPath("~/images/products");
+                            string fileName = $"{DateTime.Now.Ticks}-{uploadPhoto.FileName}";
+                            string filePath = System.IO.Path.Combine(path, fileName);
+                            uploadPhoto.SaveAs(filePath);
+                            data.Photo = fileName;
+                        }
                         if (data.PhotoID == 0)
                             CommonDataService.AddProductPhoto(data);
                         else

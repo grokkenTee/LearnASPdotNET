@@ -1,6 +1,7 @@
 ﻿@model SV19T1021254.DomainModel.Employee
+@using System.Text.RegularExpressions
 @{
-
+    var patern = new Regex(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*).*");
 }
 
 <div class="box box-primary">
@@ -10,7 +11,7 @@
     <div class="box-body">
         <form class="form-horizontal" action="~/employee/save" method="post" enctype="multipart/form-data">
 
-            @Html.HiddenFor(m=>m.EmployeeID)
+            @Html.HiddenFor(m => m.EmployeeID)
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Họ:</label>
@@ -27,12 +28,12 @@
                     @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
                 </div>
             </div>
-            @Html.HiddenFor(m=>m.BirthDate)
+            @Html.HiddenFor(m => m.BirthDate)
             <div class="form-group">
                 <label class="control-label col-sm-2">Ngày sinh:</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="dateOfBirth" value="@string.Format("{0:dd/MM/yyyy}",Model.BirthDate)">
-                    @Html.ValidationMessageFor(m=>m.BirthDate,"",new {@class="text-danger"})
+                    @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -62,7 +63,14 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
                     <input type="hidden" name="Photo" value="@Model.Photo" />
-                    <img id="Photo" src="~/Images/Employees/@Model.Photo" class="img img-bordered" style="width:200px" />
+                    @if (patern.IsMatch(Model.Photo??""))
+                    {
+                        <img id="Photo" src="@Model.Photo" class="img img-bordered" style="width:150px" />
+                    }
+                    else
+                    {
+                        <img id="Photo" src="~/Images/Employees/@Model.Photo" class="img img-bordered" style="width:200px" />
+                    }
                 </div>
             </div>
 
