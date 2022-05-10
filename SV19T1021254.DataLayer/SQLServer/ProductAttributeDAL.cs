@@ -12,7 +12,7 @@ namespace SV19T1021254.DataLayer.SQLServer
     /// <summary>
     /// 
     /// </summary>
-    public class ProductAttributeDAL : _BaseDAL
+    public class ProductAttributeDAL : _BaseDAL, IProductDetailDAL<ProductAttribute>
     {
         /// <summary>
         /// Ctor
@@ -60,9 +60,33 @@ namespace SV19T1021254.DataLayer.SQLServer
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
+        public int Count(int productID = 0)
+        {
+            int count = 0;
+            using (SqlConnection cn = OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = @"SELECT    COUNT(*)
+                                    FROM    ProductAttributes
+                                    WHERE   ProductID = @productId";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = cn;
+
+                cmd.Parameters.AddWithValue("@productId", productID);
+
+                count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                cn.Close();
+            }
+            return count;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="attributeID"></param>
         /// <returns></returns>
-        //RECENT Thêm Count()? và GetMaxID().
         public ProductAttribute Get(int attributeID)
         {
             ProductAttribute result = null;
@@ -174,6 +198,15 @@ namespace SV19T1021254.DataLayer.SQLServer
                 cn.Close();
             }
             return result;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool InUsed(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

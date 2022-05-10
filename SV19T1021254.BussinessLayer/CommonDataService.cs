@@ -21,10 +21,9 @@ namespace SV19T1021254.BussinessLayer
         private static readonly ICommonDAL<Shipper> shipperDB;
         private static readonly ICommonDAL<Employee> employeeDB;
         private static readonly ICommonDAL<Country> countryDB;
-        
-        private static readonly ProductDAL productDB;
-        private static readonly ProductPhotoDAL prodPhotoDB;
-        private static readonly ProductAttributeDAL prodAttributeDB;
+        private static readonly IProductDAL productDB;
+        private static readonly IProductDetailDAL<ProductPhoto> prodPhotoDB;
+        private static readonly IProductDetailDAL<ProductAttribute> prodAttributeDB;
 
         /// <summary>
         /// Ctor
@@ -483,15 +482,6 @@ namespace SV19T1021254.BussinessLayer
         public static List<ProductPhoto> ListOfProductPhotos(int productID)
         {
             return prodPhotoDB.List(productID).ToList();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        public static int GetMaxPhotoID(int productID)
-        {
-            return prodPhotoDB.GetMaxID(productID);
         }
         /// <summary>
         /// Lấy thông tin 1 ảnh
