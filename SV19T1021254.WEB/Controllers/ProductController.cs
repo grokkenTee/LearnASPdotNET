@@ -181,7 +181,7 @@ namespace SV19T1021254.Web.Controllers
                 case "add":
                     ViewBag.Title = "Bổ sung ảnh";
                     break;
-                    
+
                 case "edit":
                     model = CommonDataService.GetProductPhoto(photoID);
                     if (model == null)
@@ -208,7 +208,6 @@ namespace SV19T1021254.Web.Controllers
                         else
                             CommonDataService.UpdateProductPhoto(data);
                     }
-                    return Json(data);
                     redirectToEdit = true;
                     break;
 
@@ -226,6 +225,54 @@ namespace SV19T1021254.Web.Controllers
                 return RedirectToAction("Edit", new { productID = productID });
             return View(model);
         }
+        //[HttpPost]
+        //public ActionResult SavePhoto(ProductPhoto model, HttpPostedFileBase uploadPhoto)
+        //{
+        //    if (string.IsNullOrWhiteSpace(model.ProductName))
+        //        ModelState.AddModelError("ProductName", "Tên mặt hàng không được để trống");
+        //    if (string.IsNullOrWhiteSpace(model.Unit))
+        //        ModelState.AddModelError("Unit", "Đơn vị tính không được để trống");
+        //    //if (string.IsNullOrWhiteSpace(model.Price))
+        //    //    ModelState.AddModelError("Price", "Giá không được để trống");
+        //    //if (string.IsNullOrWhiteSpace(model.))
+        //    //    model.Notes = "";
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        if (model.ProductID == 0)
+        //            return View("Create", model);
+        //        else
+        //            return View("Edit", model);
+        //    }
+
+        //    if (uploadPhoto != null)
+        //    {
+        //        string path = Server.MapPath("~/images/products");
+        //        string fileName = $"{DateTime.Now.Ticks}-{uploadPhoto.FileName}";
+        //        string filePath = System.IO.Path.Combine(path, fileName);
+        //        uploadPhoto.SaveAs(filePath);
+        //        model.Photo = fileName;
+        //    }
+
+        //    if (model.ProductID == 0)
+        //    {
+        //        CommonDataService.AddProduct(model);
+        //        Session["PRODUCT_SEARCH"] = new Models.ProductPaginationSearchResult()
+        //        {
+        //            Page = 1,
+        //            PageSize = 10,
+        //            SearchValue = model.ProductName,
+        //            CategoryID = model.CategoryID,
+        //            SupplierID = model.SupplierID
+        //        };
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        CommonDataService.UpdateProduct(model);
+        //        return RedirectToAction("Index");
+        //    }
+        //}
         /// <summary>
         /// 
         /// </summary>
@@ -257,7 +304,7 @@ namespace SV19T1021254.Web.Controllers
                     }
                     ViewBag.Title = "Thay đổi thuộc tính";
                     break;
-                
+
                 case "save":
                     if (Request.HttpMethod == "POST")
                     {
