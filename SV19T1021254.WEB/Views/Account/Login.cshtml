@@ -41,7 +41,7 @@
             <p class="login-box-msg">Sign in to start your session</p>
 
             <form action="~/account/login" method="post">
-                @Html.ValidationMessage("Failed", new { @class = "text-danger" });
+                @Html.ValidationMessage("Failed", new { @class = "text-danger" })
                 <div class="form-group has-feedback">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Username", @autofocus = "" })
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -53,9 +53,6 @@
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
                 <div class="row">
-                    <div class="col-xs-8">
-                        @ViewBag.Message
-                    </div>
 
                     <!-- /.col -->
                     <div class="col-xs-4">
